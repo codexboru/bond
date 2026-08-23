@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Türkei 1J Staatsanleihe Tracker</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    .buy { background-color: #d4f7d4; }
+    .sell { background-color: #f7d4d4; }
+    .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h2>Türkei 1-jährige Staatsanleihe</h2>
+
+<!-- Eingabeformular -->
+<label>Summe (TL): <input type="number" id="sumTL" step="0.01"></label>
+<label>Datum: <input type="date" id="date"></label>
+<label>Kaufkurs (%): <input type="number" id="buyPrice" step="0.01"></label>
+<label>Ticker: <input type="text" id="ticker"></label>
+<label>Verkaufskurs (%): <input type="number" id="sellPrice" step="0.01"></label>
+<button onclick="addEntry()">Eintrag hinzufügen</button>
+
+<!-- Tabelle -->
+<table id="bondTable">
+  <thead>
+    <tr>
+      <th>Datum</th>
+      <th>Summe (TL)</th>
+      <th class="buy">Kaufkurs (%)</th>
+      <th>Ticker</th>
+      <th class="sell">Verkaufskurs (%)</th>
+      <th>Nominal (%)</th>
+      <th>Unrealized Profit (TL)</th>
+      <th>Aktion</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<!-- Totals -->
+<h3>Gesamt investiert: <span id="totalInvested">0</span> TL</h3>
+<h3>Gesamt Unrealized Profit: <span id="totalProfit">0</span> TL</h3>
+
+<script>
+function addEntry() {
+  const sumTL = parseFloat(document.getElementById('sumTL').value) || 0;
+  const date = document.getElementById('date').value;
+  const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+  const ticker = document.getElementById('ticker').value;
+  const sellPrice = parseFloat(document.getElementById('sellPrice').value);
+
+  const nominal = 100;
+  let profit = 0;
+  if (!isNaN(sellPrice) && sellPrice > 0) {
+    profit = ((sellPrice - buyPrice) / 100) * sumTL;
+  } else {
+    profit = ((nominal - buyPrice) / 100) * sumTL;
+  }
+
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  const row = table.insertRow();
+
+  row.innerHTML = `
+    <td>${date}</td>
+    <td>${sumTL.toFixed(2)}</td>
+    <td>${buyPrice.toFixed(2)}</td>
+    <td>${ticker}</td>
+    <td>${sellPrice ? sellPrice.toFixed(2) : '-'}</td>
+    <td>${nominal}</td>
+    <td>${profit.toFixed(2)}</td>
+    <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+  `;
+
+  updateTotals();
+}
+
+function deleteRow(btn) {
+  const row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+  updateTotals();
+}
+
+function updateTotals() {
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  let totalInvested = 0;
+  let totalProfit = 0;
+
+  for (let row of table.rows) {
+    totalInvested += parseFloat(row.cells[1].innerText) || 0;
+    totalProfit += parseFloat(row.cells[6].innerText) || 0;
+  }
+
+  document.getElementById('totalInvested').innerText = totalInvested.toFixed(2);
+  document.getElementById('totalProfit').innerText = totalProfit.toFixed(2);
+}
+</script>
+
+</body>
+</html>
