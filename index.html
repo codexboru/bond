@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <title>Türkei 1J Staatsanleihe Tracker</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: white; color: black; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
     th { background-color: #f0f0f0; }
     .buy { background-color: #d4f7d4; }
     .sell { background-color: #f7d4d4; }
     .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .dark-mode { background-color: black; color: white; }
+    .dark-mode th { background-color: #333; }
   </style>
 </head>
 <body>
@@ -45,6 +47,13 @@
 <!-- Totals -->
 <h3>Gesamt investiert: <span id="totalInvested">0</span> TL</h3>
 <h3>Gesamt Unrealized Profit: <span id="totalProfit">0</span> TL</h3>
+<h3>Total (Investiert + Profit): <span id="grandTotal">0</span> TL</h3>
+
+<!-- Buttons -->
+<button onclick="toggleMode()">Tag/Nacht Ansicht</button>
+<button onclick="downloadData()">Daten herunterladen</button>
+<input type="file" id="uploadFile" onchange="uploadData()" style="display:none;" />
+<button onclick="document.getElementById('uploadFile').click()">Datei hochladen</button>
 
 <script>
 function addEntry() {
@@ -56,8 +65,11 @@ function addEntry() {
 
   const nominal = 100;
   let profit = 0;
+  let invested = sumTL;
+
   if (!isNaN(sellPrice) && sellPrice > 0) {
     profit = ((sellPrice - buyPrice) / 100) * sumTL;
+    invested = 0; // Verkauf -> Investition wird abgezogen
   } else {
     profit = ((nominal - buyPrice) / 100) * sumTL;
   }
@@ -76,6 +88,9 @@ function addEntry() {
     <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
   `;
 
+  row.dataset.invested = invested;
+  row.dataset.profit = profit;
+
   updateTotals();
 }
 
@@ -91,14 +106,70 @@ function updateTotals() {
   let totalProfit = 0;
 
   for (let row of table.rows) {
-    totalInvested += parseFloat(row.cells[1].innerText) || 0;
-    totalProfit += parseFloat(row.cells[6].innerText) || 0;
+    totalInvested += parseFloat(row.dataset.invested) || 0;
+    totalProfit += parseFloat(row.dataset.profit) || 0;
   }
 
   document.getElementById('totalInvested').innerText = totalInvested.toFixed(2);
   document.getElementById('totalProfit').innerText = totalProfit.toFixed(2);
+  document.getElementById('grandTotal').innerText = (totalInvested + totalProfit).toFixed(2);
+}
+
+function toggleMode() {
+  document.body.classList.toggle("dark-mode");
+}
+
+function downloadData() {
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  const data = [];
+  for (let row of table.rows) {
+    data.push({
+      date: row.cells[0].innerText,
+      sumTL: row.cells[1].innerText,
+      buyPrice: row.cells[2].innerText,
+      ticker: row.cells[3].innerText,
+      sellPrice: row.cells[4].innerText,
+      nominal: row.cells[5].innerText,
+      profit: row.cells[6].innerText
+    });
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bonddata.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function uploadData() {
+  const file = document.getElementById('uploadFile').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = JSON.parse(e.target.result);
+    const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+    table.innerHTML = "";
+    data.forEach(entry => {
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${entry.date}</td>
+        <td>${entry.sumTL}</td>
+        <td>${entry.buyPrice}</td>
+        <td>${entry.ticker}</td>
+        <td>${entry.sellPrice}</td>
+        <td>${entry.nominal}</td>
+        <td>${entry.profit}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+      `;
+      row.dataset.invested = parseFloat(entry.sellPrice) > 0 ? 0 : parseFloat(entry.sumTL);
+      row.dataset.profit = parseFloat(entry.profit);
+    });
+    updateTotals();
+  };
+  reader.readAsText(file);
 }
 </script>
 
 </body>
-</html>
+  </html>
