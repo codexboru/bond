@@ -2,94 +2,50 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Bond Calculator – Codexboru</title>
-  <!-- 8-Bit Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>Türkei 1J Staatsanleihe Tracker</title>
   <style>
-    body {
-      font-family: 'Press Start 2P', monospace;
-      background-color: #111;
-      color: #0f0;
-      margin: 0;
-      padding: 0;
-    }
-    button {
-      font-family: 'Press Start 2P', monospace;
-      background-color: #222;
-      color: #0f0;
-      border: 3px solid #0f0;
-      padding: 10px 20px;
-      cursor: pointer;
-      box-shadow: 4px 4px #0f0;
-    }
-    button:hover {
-      background-color: #0f0;
-      color: #111;
-    }
-    .nav-left, .nav-right {
-      position: fixed;
-      top: 10px;
-      z-index: 999;
-    }
-    .nav-left { left: 10px; }
-    .nav-right { right: 10px; display: flex; gap: 10px; }
-    #readmeModal {
-      display: none;
-      position: fixed;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 80%;
-      background: #111;
-      color: #0f0;
-      border: 3px solid #0f0;
-      padding: 20px;
-      overflow-y: scroll;
-      z-index: 1000;
-    }
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: white; color: black; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    .buy { background-color: #d4f7d4; }
+    .sell { background-color: #f7d4d4; }
+    .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .dark-mode { background-color: black; color: white; }
+    .dark-mode th { background-color: #333; }
   </style>
 </head>
 <body>
 
-<!-- Navigation Buttons -->
-<div class="nav-left">
-  <a href="https://www.github.com/codexboru" target="_blank">
-    <button>Codexboru</button>
-  </a>
-</div>
-<div class="nav-right">
-  <a href="https://codexboru.github.io/bond/index.html" target="_blank">
-    <button>Bond_calculator</button>
-  </a>
-  <button onclick="toggleReadme()">README</button>
-</div>
+<h2>Türkei 1-jährige Staatsanleihe</h2>
 
-<!-- TradingView Chart für TR01 -->
+<!-- TradingView Widget -->
 <div class="tradingview-widget-container" id="tv-container">
   <div id="tradingview_chart"></div>
 </div>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
 <script>
 function loadChart(theme="light") {
   document.getElementById("tradingview_chart").innerHTML = "";
   new TradingView.widget({
     "container_id": "tradingview_chart",
-    "symbol": "TVC:TR01",
-    "interval": "D",
+    "symbols": [["TVC:TR01|1Y"]],
+    "chartOnly": true,
     "width": "100%",
     "height": "400",
     "locale": "de",
     "colorTheme": theme,
     "isTransparent": false,
-    "autosize": true
+    "autosize": true,
+    "showVolume": false,
+    "hideDateRanges": false
   });
 }
-loadChart("light");
 </script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>loadChart("light");</script>
 
-<!-- Bond Calculator Eingabeformular -->
-<h2>Türkei 1-jährige Staatsanleihe</h2>
+<!-- Eingabeformular -->
 <label>Summe (TL): <input type="number" id="sumTL" step="0.01"></label>
 <label>Datum: <input type="date" id="date"></label>
 <label>Kaufkurs (%): <input type="number" id="buyPrice" step="0.01"></label>
@@ -97,14 +53,15 @@ loadChart("light");
 <label>Verkaufskurs (%): <input type="number" id="sellPrice" step="0.01"></label>
 <button onclick="addEntry()">Eintrag hinzufügen</button>
 
+<!-- Tabelle -->
 <table id="bondTable">
   <thead>
     <tr>
       <th>Datum</th>
       <th>Summe (TL)</th>
-      <th>Kaufkurs (%)</th>
+      <th class="buy">Kaufkurs (%)</th>
       <th>Ticker</th>
-      <th>Verkaufskurs (%)</th>
+      <th class="sell">Verkaufskurs (%)</th>
       <th>Nominal (%)</th>
       <th>Unrealized Profit (TL)</th>
       <th>Aktion</th>
@@ -113,38 +70,16 @@ loadChart("light");
   <tbody></tbody>
 </table>
 
+<!-- Totals -->
 <h3>Gesamt investiert: <span id="totalInvested">0</span> TL</h3>
 <h3>Gesamt Unrealized Profit: <span id="totalProfit">0</span> TL</h3>
 <h3>Total (Investiert + Profit): <span id="grandTotal">0</span> TL</h3>
 
+<!-- Buttons -->
 <button onclick="toggleMode()">Tag/Nacht Ansicht</button>
 <button onclick="downloadData()">Daten herunterladen</button>
 <input type="file" id="uploadFile" onchange="uploadData()" style="display:none;" />
 <button onclick="document.getElementById('uploadFile').click()">Datei hochladen</button>
-
-<!-- README Modal -->
-<div id="readmeModal">
-  <h1>🎮 Bond Calculator – Codexboru Edition (8‑Bit Style)</h1>
-  <p>Wenn die Leitzinsen erhöht werden, fällt der Kurs der Staatsanleihe von 100 % nach unten. 
-  Trotzdem wird am Ende der Laufzeit der Nominalwert von 100 % ausgezahlt – unabhängig vom Kauf‑ oder Verkaufskurs.</p>
-  <h3>Beispiel:</h3>
-  <p><b>Ticker: TRB100227</b><br>
-  TRB = Europäische Türkische Staatsanleihe<br>
-  100227 = Ablaufdatum 10.02.27<br>
-  Auszahlung: 100 % Nominalwert</p>
-  <h3>Zins ↑ → Kurs ↓</h3>
-  <ul>
-    <li>Alte Anleihen verlieren an Attraktivität</li>
-    <li>Kapital fließt in neue Anleihen</li>
-    <li>Risiko‑Assets fallen</li>
-  </ul>
-  <h3>Zins ↓ → Kurs ↑</h3>
-  <ul>
-    <li>Alte Anleihen mit hohem Kupon steigen</li>
-    <li>Verkaufspreise steigen</li>
-    <li>Risiko‑Assets steigen</li>
-  </ul>
-</div>
 
 <script>
 function addEntry() {
@@ -176,7 +111,7 @@ function addEntry() {
     <td>${sellPrice ? sellPrice.toFixed(2) : '-'}</td>
     <td>${nominal}</td>
     <td>${(!isNaN(sellPrice) && sellPrice > 0) ? '-' : profit.toFixed(2)}</td>
-    <td><button onclick="deleteRow(this)">Löschen</button></td>
+    <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
   `;
 
   row.dataset.invested = invested;
@@ -203,4 +138,69 @@ function updateTotals() {
 
   document.getElementById('totalInvested').innerText = totalInvested.toFixed(2);
   document.getElementById('totalProfit').innerText = totalProfit.toFixed(2);
-  document.getElementById('grandTotal').innerText = (totalInvested + totalProfit).
+  document.getElementById('grandTotal').innerText = (totalInvested + totalProfit).toFixed(2);
+}
+
+function toggleMode() {
+  document.body.classList.toggle("dark-mode");
+  if (document.body.classList.contains("dark-mode")) {
+    loadChart("dark");
+  } else {
+    loadChart("light");
+  }
+}
+
+function downloadData() {
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  const data = [];
+  for (let row of table.rows) {
+    data.push({
+      date: row.cells[0].innerText,
+      sumTL: row.cells[1].innerText,
+      buyPrice: row.cells[2].innerText,
+      ticker: row.cells[3].innerText,
+      sellPrice: row.cells[4].innerText,
+      nominal: row.cells[5].innerText,
+      profit: row.cells[6].innerText
+    });
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bonddata.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function uploadData() {
+  const file = document.getElementById('uploadFile').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = JSON.parse(e.target.result);
+    const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+    table.innerHTML = "";
+    data.forEach(entry => {
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${entry.date}</td>
+        <td>${entry.sumTL}</td>
+        <td>${entry.buyPrice}</td>
+        <td>${entry.ticker}</td>
+        <td>${entry.sellPrice}</td>
+        <td>${entry.nominal}</td>
+        <td>${entry.profit}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+      `;
+      row.dataset.invested = parseFloat(entry.sellPrice) > 0 ? 0 : parseFloat(entry.sumTL);
+      row.dataset.profit = parseFloat(entry.sellPrice) > 0 ? 0 : parseFloat(entry.profit);
+    });
+    updateTotals();
+  };
+  reader.readAsText(file);
+}
+</script>
+
+</body>
+</html>
