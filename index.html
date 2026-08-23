@@ -3,31 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Türkei 1J Staatsanleihe Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Press Start 2P', monospace; margin: 20px; background-color: #111; color: #0f0; }
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: white; color: black; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #0f0; padding: 8px; text-align: center; }
-    th { background-color: #222; }
-    .buy { background-color: #033; }
-    .sell { background-color: #300; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
+    .buy { background-color: #d4f7d4; }
+    .sell { background-color: #f7d4d4; }
     .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
     .dark-mode { background-color: black; color: white; }
     .dark-mode th { background-color: #333; }
-    .nav-top { position: fixed; top: 10px; left: 10px; display: flex; gap: 10px; z-index: 999; }
-    button { background-color: #222; color: #0f0; border: 3px solid #0f0; padding: 10px 20px; cursor: pointer; box-shadow: 4px 4px #0f0; }
-    button:hover { background-color: #0f0; color: #111; }
-    #readmeModal { display: none; position: fixed; top: 50px; left: 50%; transform: translateX(-50%); width: 80%; height: 80%; background: #111; color: #0f0; border: 3px solid #0f0; padding: 20px; overflow-y: scroll; z-index: 1000; }
   </style>
 </head>
 <body>
-
-<!-- Navigation Buttons oben links -->
-<div class="nav-top">
-  <a href="https://www.github.com/codexboru" target="_blank"><button>Codexboru</button></a>
-  <button onclick="toggleReadme()">README</button>
-  <a href="https://codexboru.github.io/bond/index.html" target="_blank"><button>Bond_calculator</button></a>
-</div>
 
 <h2>Türkei 1-jährige Staatsanleihe</h2>
 
@@ -67,36 +55,7 @@
 <input type="file" id="uploadFile" onchange="uploadData()" style="display:none;" />
 <button onclick="document.getElementById('uploadFile').click()">Datei hochladen</button>
 
-<!-- README Modal -->
-<div id="readmeModal">
-  <h1>🎮 Bond Calculator – Codexboru Edition (8‑Bit Style)</h1>
-  <p>Wenn die Leitzinsen erhöht werden, fällt der Kurs der Staatsanleihe von 100 % nach unten. 
-  Trotzdem wird am Ende der Laufzeit der Nominalwert von 100 % ausgezahlt – unabhängig vom Kauf‑ oder Verkaufskurs.</p>
-  <h3>Beispiel:</h3>
-  <p><b>Ticker: TRB100227</b><br>
-  TRB = Europäische Türkische Staatsanleihe<br>
-  100227 = Ablaufdatum 10.02.27<br>
-  Auszahlung: 100 % Nominalwert</p>
-  <h3>Zins ↑ → Kurs ↓</h3>
-  <ul>
-    <li>Alte Anleihen verlieren an Attraktivität</li>
-    <li>Kapital fließt in neue Anleihen</li>
-    <li>Risiko‑Assets fallen</li>
-  </ul>
-  <h3>Zins ↓ → Kurs ↑</h3>
-  <ul>
-    <li>Alte Anleihen mit hohem Kupon steigen</li>
-    <li>Verkaufspreise steigen</li>
-    <li>Risiko‑Assets steigen</li>
-  </ul>
-</div>
-
 <script>
-function toggleReadme() {
-  const modal = document.getElementById("readmeModal");
-  modal.style.display = (modal.style.display === "block") ? "none" : "block";
-}
-
 function addEntry() {
   const sumTL = parseFloat(document.getElementById('sumTL').value) || 0;
   const date = document.getElementById('date').value;
@@ -166,5 +125,51 @@ function downloadData() {
   for (let row of table.rows) {
     data.push({
       date: row.cells[0].innerText,
-      sumTL
-      
+      sumTL: row.cells[1].innerText,
+      buyPrice: row.cells[2].innerText,
+      ticker: row.cells[3].innerText,
+      sellPrice: row.cells[4].innerText,
+      nominal: row.cells[5].innerText,
+      profit: row.cells[6].innerText
+    });
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bonddata.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function uploadData() {
+  const file = document.getElementById('uploadFile').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = JSON.parse(e.target.result);
+    const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+    table.innerHTML = "";
+    data.forEach(entry => {
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${entry.date}</td>
+        <td>${entry.sumTL}</td>
+        <td>${entry.buyPrice}</td>
+        <td>${entry.ticker}</td>
+        <td>${entry.sellPrice}</td>
+        <td>${entry.nominal}</td>
+        <td>${entry.profit}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+      `;
+      row.dataset.invested = parseFloat(entry.sellPrice) > 0 ? 0 : parseFloat(entry.sumTL);
+      row.dataset.profit = parseFloat(entry.sellPrice) > 0 ? 0 : parseFloat(entry.profit);
+    });
+    updateTotals();
+  };
+  reader.readAsText(file);
+}
+</script>
+
+</body>
+</html>
