@@ -1,8 +1,8 @@
 # 🎮 Bond Calculator – Codexboru Edition (8‑Bit Style)
 
 ## 📌 Navigation
-- Links oben: [Codexboru](www.Github.com/codexboru)  
-- Rechts oben: [Bond_calculator](codexboru.github.io/bond/index.html)  
+- 😶‍🌫️: [Codexboru](www.Github.com/codexboru)  
+- 🕳: [Bond_calculator](codexboru.github.io/bond/index.html)  
 
 Beide Buttons sind im **Retro‑8‑Bit‑Pixel‑Style** gestaltet und fest oben positioniert.
 
