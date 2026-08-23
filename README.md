@@ -1,4 +1,4 @@
-# 🎮 Bond Calculator – Codexboru Edition (8‑Bit Style)
+# 🎮 Bond Calculator – Codexboru Edition 
 
 ## 📌 Navigation
 - 😶‍🌫️: [Codexboru](https://github.com/codexboru/)  
