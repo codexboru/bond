@@ -59,7 +59,9 @@
 <a href="https://codexboru.github.io/bond/index.html" target="_blank"><button>Bond_calculator</button></a>
 
 <button onclick="downloadData()">Daten herunterladen</button>
-<input type="file" id="uploadFile" onchange="uploadData()" style="display:none;" />
+<input type="file" id="uploadFile" 
+       accept=".json,.txt,.csv" 
+       onchange="uploadData()" style="display:none;" />
 <button onclick="document.getElementById('uploadFile').click()">Datei hochladen</button>
 
 <script>
