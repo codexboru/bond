@@ -4,8 +4,6 @@
 - 😶‍🌫️: [Codexboru](https://github.com/codexboru/)  
 - 🕳: [Bond_calculator](https://codexboru.github.io/bond/index.html)  
 
-Beide Buttons sind im **Retro‑8‑Bit‑Pixel‑Style** gestaltet und fest oben positioniert.
-
 ---
 
 ## 🕹️ Einleitung
