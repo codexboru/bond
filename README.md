@@ -1,5 +1,8 @@
+# Bond Calculator – Codexboru Edition 🎮
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![View Demo](https://img.shields.io/badge/View-Demo-blue.svg)](https://codexboru.github.io/bond/index.html)
+[![Made with ❤️ by Codexboru](https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg)](https://github.com/codexboru)
 
 # 🎮 Bond Calculator – Codexboru Edition 
 
