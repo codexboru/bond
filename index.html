@@ -3,47 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Türkei 1J Staatsanleihe Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background-color: white; color: black; }
+    body { font-family: 'Press Start 2P', monospace; margin: 20px; background-color: #111; color: #0f0; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background-color: #f0f0f0; }
-    .buy { background-color: #d4f7d4; }
-    .sell { background-color: #f7d4d4; }
+    th, td { border: 1px solid #0f0; padding: 8px; text-align: center; }
+    th { background-color: #222; }
+    .buy { background-color: #033; }
+    .sell { background-color: #300; }
     .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
     .dark-mode { background-color: black; color: white; }
     .dark-mode th { background-color: #333; }
+    button { background-color: #222; color: #0f0; border: 3px solid #0f0; padding: 10px 20px; cursor: pointer; box-shadow: 4px 4px #0f0; }
+    button:hover { background-color: #0f0; color: #111; }
   </style>
 </head>
 <body>
 
 <h2>Türkei 1-jährige Staatsanleihe</h2>
-
-<!-- TradingView Widget -->
-<div class="tradingview-widget-container" id="tv-container">
-  <div id="tradingview_chart"></div>
-</div>
-
-<script>
-function loadChart(theme="light") {
-  document.getElementById("tradingview_chart").innerHTML = "";
-  new TradingView.widget({
-    "container_id": "tradingview_chart",
-    "symbols": [["TVC:TR01|1Y"]],
-    "chartOnly": true,
-    "width": "100%",
-    "height": "400",
-    "locale": "de",
-    "colorTheme": theme,
-    "isTransparent": false,
-    "autosize": true,
-    "showVolume": false,
-    "hideDateRanges": false
-  });
-}
-</script>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script>loadChart("light");</script>
 
 <!-- Eingabeformular -->
 <label>Summe (TL): <input type="number" id="sumTL" step="0.01"></label>
@@ -77,6 +54,10 @@ function loadChart(theme="light") {
 
 <!-- Buttons -->
 <button onclick="toggleMode()">Tag/Nacht Ansicht</button>
+<a href="https://www.github.com/codexboru" target="_blank"><button>Codexboru</button></a>
+<a href="https://www.github.com/codexboru/bond/README.md" target="_blank"><button>README.md</button></a>
+<a href="https://codexboru.github.io/bond/index.html" target="_blank"><button>Bond_calculator</button></a>
+
 <button onclick="downloadData()">Daten herunterladen</button>
 <input type="file" id="uploadFile" onchange="uploadData()" style="display:none;" />
 <button onclick="document.getElementById('uploadFile').click()">Datei hochladen</button>
@@ -143,11 +124,6 @@ function updateTotals() {
 
 function toggleMode() {
   document.body.classList.toggle("dark-mode");
-  if (document.body.classList.contains("dark-mode")) {
-    loadChart("dark");
-  } else {
-    loadChart("light");
-  }
 }
 
 function downloadData() {
