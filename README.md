@@ -1,10 +1,5 @@
-# Bond Calculator – Codexboru Edition 🎮
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-Wenn die Leitzinsen erhöht werden, fällt der Kurs der Staatsanleihe von 100 % nach unten.  
-Trotzdem wird am Ende der Laufzeit der Nominalwert von 100 % ausgezahlt – unabhängig vom Kauf‑ oder Verkaufskurs.
-
+[![View Demo](https://img.shields.io/badge/View-Demo-blue.svg)](https://codexboru.github.io/bond/index.html)
 
 # 🎮 Bond Calculator – Codexboru Edition 
 
