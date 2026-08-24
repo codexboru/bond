@@ -10,7 +10,7 @@
     .hoch { background-color: #4CAF50; color: white; }
     .mittel { background-color: #FFD700; color: black; }
     .selten { background-color: #FF4500; color: white; }
-    button { margin: 10px 5px; padding: 8px 12px; }
+    button { margin: 5px; padding: 6px 10px; }
   </style>
   <script>
     let table;
@@ -49,21 +49,45 @@
       freqCell.innerText = freq;
       freqCell.className = freq.toLowerCase();
       row.insertCell(5).innerText = comment;
+      const deleteCell = row.insertCell(6);
+      const btn = document.createElement("button");
+      btn.innerText = "Löschen";
+      btn.onclick = () => { table.deleteRow(row.rowIndex); saveLocal(); };
+      deleteCell.appendChild(btn);
     }
 
     async function fetchData() {
-      // Hier würden die echten API-Abfragen laufen
-      // Für den Ist-Zustand heute setzen wir Dummy-Werte
-      const date = new Date().toLocaleDateString();
-      const usaVal = "Aktiv";
-      const ezbVal = "Nein";
-      const tcmbVal = "Zins ↑";
-      const freqText = "Mittel";
+      try {
+        const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
+        const usaData = await usa.json();
 
-      addRow(date, usaVal, ezbVal, tcmbVal, freqText, "Ist-Zustand eingetragen am 24.08.2026");
-      saveLocal();
+        const ezb = await fetch("https://sdw.ecb.europa.eu/api/data/MP_OPS");
+        const ezbData = await ezb.json();
 
-      scheduleNextWednesday();
+        const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
+        const tcmbData = await tcmb.json();
+
+        const date = new Date().toLocaleDateString();
+        const usaVal = usaData?.data?.[0]?.buyback_amount || 0;
+        const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
+        const tcmbVal = tcmbData?.items?.[0]?.value || 0;
+
+        let freqClass = "mittel";
+        let freqText = "Mittel";
+        if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
+          freqClass = "hoch"; freqText = "Hoch";
+        } else if ((usaVal > 0 || ezbVal > 0) && tcmbVal > 0) {
+          freqClass = "mittel"; freqText = "Mittel";
+        } else {
+          freqClass = "selten"; freqText = "Selten";
+        }
+
+        addRow(date, usaVal > 0 ? "Aktiv" : "Nein", ezbVal > 0 ? "Aktiv" : "Nein", tcmbVal > 0 ? "Zins ↑" : "Zins ↓", freqText, "Ist-Zustand aus API");
+        saveLocal();
+        scheduleNextWednesday();
+      } catch (e) {
+        console.error("Fehler beim Abrufen der Daten:", e);
+      }
     }
 
     function scheduleNextWednesday() {
@@ -93,7 +117,7 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         const rows = JSON.parse(e.target.result);
-        table.innerHTML = "<tr><th>Datum</th><th>USA Rückkäufe</th><th>EZB Rückkäufe</th><th>Türkei Zinsreaktion</th><th>Häufigkeit</th><th>Kommentar</th></tr>";
+        table.innerHTML = "<tr><th>Datum</th><th>USA Rückkäufe</th><th>EZB Rückkäufe</th><th>Türkei Zinsreaktion</th><th>Häufigkeit</th><th>Kommentar</th><th>Aktion</th></tr>";
         rows.forEach(r => addRow(r.date, r.usa, r.ezb, r.tr, r.freq, r.comment));
         saveLocal();
       };
@@ -103,7 +127,7 @@
     window.onload = () => {
       table = document.getElementById("matrix");
       loadLocal();
-      fetchData(); // Sofortiger Ist-Zustand
+      fetchData(); // Sofortiger Ist-Zustand aus API
     };
   </script>
 </head>
@@ -121,6 +145,7 @@
       <th>Türkei Zinsreaktion</th>
       <th>Häufigkeit</th>
       <th>Kommentar</th>
+      <th>Aktion</th>
     </tr>
   </table>
 </body>
