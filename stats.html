@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Hybrid: Rückkäufe & Türkei Zinsen</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f2f2f2; }
+    #filter { margin-bottom: 15px; }
+    .hoch { background-color: #4CAF50; color: white; }   /* Grün */
+    .mittel { background-color: #FFD700; color: black; } /* Gelb */
+    .selten { background-color: #FF4500; color: white; } /* Rot */
+  </style>
+  <script>
+    let table;
+
+    async function fetchData() {
+      try {
+        // US Treasury Buybacks
+        const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
+        const usaData = await usa.json();
+
+        // EZB Marktoperationen
+        const ezb = await fetch("https://sdw.ecb.europa.eu/api/data/MP_OPS");
+        const ezbData = await ezb.json();
+
+        // TCMB Zinsentscheidungen
+        const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
+        const tcmbData = await tcmb.json();
+
+        const date = new Date().toLocaleDateString();
+        const usaVal = usaData?.data?.[0]?.buyback_amount || 0;
+        const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
+        const tcmbVal = tcmbData?.items?.[0]?.value || 0;
+
+        // Häufigkeit-Klassifizierung (Ampel)
+        let freqClass = "mittel";
+        let freqText = "Mittel";
+        if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
+          freqClass = "hoch"; freqText = "Hoch";
+        } else if ((usaVal > 0 || ezbVal > 0) && tcmbVal > 0) {
+          freqClass = "mittel"; freqText = "Mittel";
+        } else {
+          freqClass = "selten"; freqText = "Selten";
+        }
+
+        // Tabelle aktualisieren
+        const row = table.insertRow();
+        row.insertCell(0).innerText = date;
+        row.insertCell(1).innerText = usaVal > 0 ? "Aktiv" : "Nein";
+        row.insertCell(2).innerText = ezbVal > 0 ? "Aktiv" : "Nein";
+        row.insertCell(3).innerText = tcmbVal > 0 ? "Zins ↑" : "Zins ↓";
+        const freqCell = row.insertCell(4);
+        freqCell.innerText = freqText;
+        freqCell.className = freqClass;
+        row.insertCell(5).innerText = "Automatisch aus API-Daten berechnet";
+      } catch (e) {
+        console.error("Fehler beim Abrufen der Daten:", e);
+      }
+    }
+
+    function filterTable() {
+      const usa = document.getElementById("usaFilter").value;
+      const ezb = document.getElementById("ezbFilter").value;
+      const tr = document.getElementById("trFilter").value;
+
+      const rows = table.getElementsByTagName("tr");
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].getElementsByTagName("td");
+        const show =
+          (usa === "Alle" || cells[1].innerText === usa) &&
+          (ezb === "Alle" || cells[2].innerText === ezb) &&
+          (tr === "Alle" || cells[3].innerText === tr);
+        rows[i].style.display = show ? "" : "none";
+      }
+    }
+
+    window.onload = () => {
+      table = document.getElementById("matrix");
+      // Initiale Abfrage
+      fetchData();
+      // Abfrage jeden Mittwoch um 12:00 Uhr
+      setInterval(() => {
+        const now = new Date();
+        if (now.getDay() === 3 && now.getHours() === 12) {
+          fetchData();
+        }
+      }, 3600000); // stündlich prüfen
+    };
+  </script>
+</head>
+<body>
+  <h1>Hybrid: USA/EZB Rückkäufe & Türkei Zinsen</h1>
+
+  <div id="filter">
+    <label>USA: 
+      <select id="usaFilter" onchange="filterTable()">
+        <option>Alle</option>
+        <option>Aktiv</option>
+        <option>Nein</option>
+      </select>
+    </label>
+    <label>EZB: 
+      <select id="ezbFilter" onchange="filterTable()">
+        <option>Alle</option>
+        <option>Aktiv</option>
+        <option>Nein</option>
+      </select>
+    </label>
+    <label>Türkei: 
+      <select id="trFilter" onchange="filterTable()">
+        <option>Alle</option>
+        <option>Zins ↑</option>
+        <option>Zins ↓</option>
+      </select>
+    </label>
+  </div>
+
+  <table id="matrix">
+    <tr>
+      <th>Datum</th>
+      <th>USA Rückkäufe</th>
+      <th>EZB Rückkäufe</th>
+      <th>Türkei Zinsreaktion</th>
+      <th>Häufigkeit</th>
+      <th>Kommentar</th>
+    </tr>
+  </table>
+</body>
+  </html>
