@@ -58,6 +58,7 @@
 
     async function fetchData() {
       try {
+        // API-Abfragen
         const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
         const usaData = await usa.json();
 
@@ -67,11 +68,13 @@
         const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
         const tcmbData = await tcmb.json();
 
+        // Werte extrahieren
         const date = new Date().toLocaleDateString();
         const usaVal = usaData?.data?.[0]?.buyback_amount || 0;
         const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
         const tcmbVal = tcmbData?.items?.[0]?.value || 0;
 
+        // Ampel-Logik
         let freqClass = "mittel";
         let freqText = "Mittel";
         if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
@@ -82,8 +85,18 @@
           freqClass = "selten"; freqText = "Selten";
         }
 
-        addRow(date, usaVal > 0 ? "Aktiv" : "Nein", ezbVal > 0 ? "Aktiv" : "Nein", tcmbVal > 0 ? "Zins ↑" : "Zins ↓", freqText, "Ist-Zustand aus API");
+        // Eintrag hinzufügen
+        addRow(
+          date,
+          usaVal > 0 ? "Aktiv" : "Nein",
+          ezbVal > 0 ? "Aktiv" : "Nein",
+          tcmbVal > 0 ? "Zins ↑" : "Zins ↓",
+          freqText,
+          "Ist-Zustand aus API"
+        );
         saveLocal();
+
+        // Nächsten Mittwoch planen
         scheduleNextWednesday();
       } catch (e) {
         console.error("Fehler beim Abrufen der Daten:", e);
@@ -99,31 +112,6 @@
       setTimeout(fetchData, delay);
     }
 
-    function downloadJSON() {
-      const stored = localStorage.getItem("matrixData");
-      if (!stored) return;
-      const blob = new Blob([stored], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "matrixData.json";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function uploadJSON(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const rows = JSON.parse(e.target.result);
-        table.innerHTML = "<tr><th>Datum</th><th>USA Rückkäufe</th><th>EZB Rückkäufe</th><th>Türkei Zinsreaktion</th><th>Häufigkeit</th><th>Kommentar</th><th>Aktion</th></tr>";
-        rows.forEach(r => addRow(r.date, r.usa, r.ezb, r.tr, r.freq, r.comment));
-        saveLocal();
-      };
-      reader.readAsText(file);
-    }
-
     window.onload = () => {
       table = document.getElementById("matrix");
       loadLocal();
@@ -133,9 +121,6 @@
 </head>
 <body>
   <h1>Hybrid: USA/EZB Rückkäufe & Türkei Zinsen</h1>
-  <button onclick="downloadJSON()">Download JSON</button>
-  <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON(event)" style="display:none" />
-  <button onclick="document.getElementById('uploadFile').click()">Upload JSON</button>
 
   <table id="matrix">
     <tr>
