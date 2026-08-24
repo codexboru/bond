@@ -7,25 +7,58 @@
     table { border-collapse: collapse; width: 100%; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
     th { background-color: #f2f2f2; }
-    #filter { margin-bottom: 15px; }
-    .hoch { background-color: #4CAF50; color: white; }   /* Grün */
-    .mittel { background-color: #FFD700; color: black; } /* Gelb */
-    .selten { background-color: #FF4500; color: white; } /* Rot */
+    .hoch { background-color: #4CAF50; color: white; }
+    .mittel { background-color: #FFD700; color: black; }
+    .selten { background-color: #FF4500; color: white; }
+    button { margin: 10px 5px; padding: 8px 12px; }
   </style>
   <script>
     let table;
 
+    function saveLocal() {
+      const rows = [];
+      for (let i = 1; i < table.rows.length; i++) {
+        const cells = table.rows[i].cells;
+        rows.push({
+          date: cells[0].innerText,
+          usa: cells[1].innerText,
+          ezb: cells[2].innerText,
+          tr: cells[3].innerText,
+          freq: cells[4].innerText,
+          comment: cells[5].innerText
+        });
+      }
+      localStorage.setItem("matrixData", JSON.stringify(rows));
+    }
+
+    function loadLocal() {
+      const stored = localStorage.getItem("matrixData");
+      if (stored) {
+        const rows = JSON.parse(stored);
+        rows.forEach(r => addRow(r.date, r.usa, r.ezb, r.tr, r.freq, r.comment));
+      }
+    }
+
+    function addRow(date, usa, ezb, tr, freq, comment) {
+      const row = table.insertRow();
+      row.insertCell(0).innerText = date;
+      row.insertCell(1).innerText = usa;
+      row.insertCell(2).innerText = ezb;
+      row.insertCell(3).innerText = tr;
+      const freqCell = row.insertCell(4);
+      freqCell.innerText = freq;
+      freqCell.className = freq.toLowerCase();
+      row.insertCell(5).innerText = comment;
+    }
+
     async function fetchData() {
       try {
-        // US Treasury Buybacks
         const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
         const usaData = await usa.json();
 
-        // EZB Marktoperationen
         const ezb = await fetch("https://sdw.ecb.europa.eu/api/data/MP_OPS");
         const ezbData = await ezb.json();
 
-        // TCMB Zinsentscheidungen
         const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
         const tcmbData = await tcmb.json();
 
@@ -34,7 +67,6 @@
         const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
         const tcmbVal = tcmbData?.items?.[0]?.value || 0;
 
-        // Häufigkeit-Klassifizierung (Ampel)
         let freqClass = "mittel";
         let freqText = "Mittel";
         if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
@@ -45,77 +77,60 @@
           freqClass = "selten"; freqText = "Selten";
         }
 
-        // Tabelle aktualisieren
-        const row = table.insertRow();
-        row.insertCell(0).innerText = date;
-        row.insertCell(1).innerText = usaVal > 0 ? "Aktiv" : "Nein";
-        row.insertCell(2).innerText = ezbVal > 0 ? "Aktiv" : "Nein";
-        row.insertCell(3).innerText = tcmbVal > 0 ? "Zins ↑" : "Zins ↓";
-        const freqCell = row.insertCell(4);
-        freqCell.innerText = freqText;
-        freqCell.className = freqClass;
-        row.insertCell(5).innerText = "Automatisch aus API-Daten berechnet";
+        addRow(date, usaVal > 0 ? "Aktiv" : "Nein", ezbVal > 0 ? "Aktiv" : "Nein", tcmbVal > 0 ? "Zins ↑" : "Zins ↓", freqText, "Automatisch aus API-Daten berechnet");
+        saveLocal();
+        scheduleNextWednesday();
       } catch (e) {
         console.error("Fehler beim Abrufen der Daten:", e);
       }
     }
 
-    function filterTable() {
-      const usa = document.getElementById("usaFilter").value;
-      const ezb = document.getElementById("ezbFilter").value;
-      const tr = document.getElementById("trFilter").value;
+    function scheduleNextWednesday() {
+      const now = new Date();
+      const next = new Date(now);
+      next.setDate(now.getDate() + ((3 - now.getDay() + 7) % 7));
+      next.setHours(12, 0, 0, 0);
+      const delay = next.getTime() - now.getTime();
+      setTimeout(fetchData, delay);
+    }
 
-      const rows = table.getElementsByTagName("tr");
-      for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].getElementsByTagName("td");
-        const show =
-          (usa === "Alle" || cells[1].innerText === usa) &&
-          (ezb === "Alle" || cells[2].innerText === ezb) &&
-          (tr === "Alle" || cells[3].innerText === tr);
-        rows[i].style.display = show ? "" : "none";
-      }
+    function downloadJSON() {
+      const stored = localStorage.getItem("matrixData");
+      if (!stored) return;
+      const blob = new Blob([stored], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "matrixData.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function uploadJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const rows = JSON.parse(e.target.result);
+        table.innerHTML = "<tr><th>Datum</th><th>USA Rückkäufe</th><th>EZB Rückkäufe</th><th>Türkei Zinsreaktion</th><th>Häufigkeit</th><th>Kommentar</th></tr>";
+        rows.forEach(r => addRow(r.date, r.usa, r.ezb, r.tr, r.freq, r.comment));
+        saveLocal();
+      };
+      reader.readAsText(file);
     }
 
     window.onload = () => {
       table = document.getElementById("matrix");
-      // Initiale Abfrage
-      fetchData();
-      // Abfrage jeden Mittwoch um 12:00 Uhr
-      setInterval(() => {
-        const now = new Date();
-        if (now.getDay() === 3 && now.getHours() === 12) {
-          fetchData();
-        }
-      }, 3600000); // stündlich prüfen
+      loadLocal();
+      fetchData(); // Sofortiger Ist-Zustand
     };
   </script>
 </head>
 <body>
   <h1>Hybrid: USA/EZB Rückkäufe & Türkei Zinsen</h1>
-
-  <div id="filter">
-    <label>USA: 
-      <select id="usaFilter" onchange="filterTable()">
-        <option>Alle</option>
-        <option>Aktiv</option>
-        <option>Nein</option>
-      </select>
-    </label>
-    <label>EZB: 
-      <select id="ezbFilter" onchange="filterTable()">
-        <option>Alle</option>
-        <option>Aktiv</option>
-        <option>Nein</option>
-      </select>
-    </label>
-    <label>Türkei: 
-      <select id="trFilter" onchange="filterTable()">
-        <option>Alle</option>
-        <option>Zins ↑</option>
-        <option>Zins ↓</option>
-      </select>
-    </label>
-  </div>
+  <button onclick="downloadJSON()">Download JSON</button>
+  <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON(event)" style="display:none" />
+  <button onclick="document.getElementById('uploadFile').click()">Upload JSON</button>
 
   <table id="matrix">
     <tr>
@@ -128,4 +143,4 @@
     </tr>
   </table>
 </body>
-  </html>
+</html>
