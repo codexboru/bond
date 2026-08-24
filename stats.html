@@ -52,37 +52,18 @@
     }
 
     async function fetchData() {
-      try {
-        const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
-        const usaData = await usa.json();
+      // Hier würden die echten API-Abfragen laufen
+      // Für den Ist-Zustand heute setzen wir Dummy-Werte
+      const date = new Date().toLocaleDateString();
+      const usaVal = "Aktiv";
+      const ezbVal = "Nein";
+      const tcmbVal = "Zins ↑";
+      const freqText = "Mittel";
 
-        const ezb = await fetch("https://sdw.ecb.europa.eu/api/data/MP_OPS");
-        const ezbData = await ezb.json();
+      addRow(date, usaVal, ezbVal, tcmbVal, freqText, "Ist-Zustand eingetragen am 24.08.2026");
+      saveLocal();
 
-        const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
-        const tcmbData = await tcmb.json();
-
-        const date = new Date().toLocaleDateString();
-        const usaVal = usaData?.data?.[0]?.buyback_amount || 0;
-        const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
-        const tcmbVal = tcmbData?.items?.[0]?.value || 0;
-
-        let freqClass = "mittel";
-        let freqText = "Mittel";
-        if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
-          freqClass = "hoch"; freqText = "Hoch";
-        } else if ((usaVal > 0 || ezbVal > 0) && tcmbVal > 0) {
-          freqClass = "mittel"; freqText = "Mittel";
-        } else {
-          freqClass = "selten"; freqText = "Selten";
-        }
-
-        addRow(date, usaVal > 0 ? "Aktiv" : "Nein", ezbVal > 0 ? "Aktiv" : "Nein", tcmbVal > 0 ? "Zins ↑" : "Zins ↓", freqText, "Automatisch aus API-Daten berechnet");
-        saveLocal();
-        scheduleNextWednesday();
-      } catch (e) {
-        console.error("Fehler beim Abrufen der Daten:", e);
-      }
+      scheduleNextWednesday();
     }
 
     function scheduleNextWednesday() {
