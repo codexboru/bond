@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Hybrid: Rückkäufe & Türkei Zinsen</title>
+  <title>Hybrid: USA/EZB Rückkäufe & Türkei Zinsen</title>
   <style>
     table { border-collapse: collapse; width: 100%; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
@@ -58,31 +58,33 @@
 
     async function fetchData() {
       try {
-        // API-Abfragen
-        const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fmr/Buyback");
+        // US Treasury Buybacks
+        const usa = await fetch("https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/buybacks");
         const usaData = await usa.json();
+        const usaVal = usaData?.data?.[0]?.totalParAmountAccepted || 0;
 
-        const ezb = await fetch("https://sdw.ecb.europa.eu/api/data/MP_OPS");
+        // EZB Beispiel: USD/EUR Kurs (letzte Beobachtung)
+        const ezb = await fetch("https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?lastNObservations=1");
         const ezbData = await ezb.json();
+        const ezbVal = ezbData?.dataSets?.[0]?.series?.["0"]?.observations?.["0"]?.[0] || 0;
 
-        const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE");
+        // TCMB Policy Rate (API-Key erforderlich!)
+        const tcmb = await fetch("https://evds2.tcmb.gov.tr/service/evds/series=TPOLICYRATE&startDate=01-01-2024&endDate=01-01-2999&type=json", {
+          headers: { key: "DEIN_API_KEY" }
+        });
         const tcmbData = await tcmb.json();
+        const tcmbVal = tcmbData?.items?.[0]?.TPOLICYRATE || 0;
 
-        // Werte extrahieren
         const date = new Date().toLocaleDateString();
-        const usaVal = usaData?.data?.[0]?.buyback_amount || 0;
-        const ezbVal = ezbData?.data?.[0]?.operation_amount || 0;
-        const tcmbVal = tcmbData?.items?.[0]?.value || 0;
 
         // Ampel-Logik
-        let freqClass = "mittel";
         let freqText = "Mittel";
         if (usaVal > 0 && ezbVal > 0 && tcmbVal > 0) {
-          freqClass = "hoch"; freqText = "Hoch";
+          freqText = "Hoch";
         } else if ((usaVal > 0 || ezbVal > 0) && tcmbVal > 0) {
-          freqClass = "mittel"; freqText = "Mittel";
+          freqText = "Mittel";
         } else {
-          freqClass = "selten"; freqText = "Selten";
+          freqText = "Selten";
         }
 
         // Eintrag hinzufügen
