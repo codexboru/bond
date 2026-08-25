@@ -48,7 +48,7 @@
 <body>
   <h1>Zinsen & Staatsanleihen – Übersicht</h1>
 
-  <!-- Navigation Buttons mit Links -->
+  <!-- Navigation -->
   <div class="nav">
     <a href="#" onclick="toggleTheme()">☀️🌙</a>
     <a href="index.html">🕳 bond_calculator</a>
@@ -58,16 +58,15 @@
     <a href="stats.html">📊 Stats</a>
     <a href="#" onclick="downloadJSON()">💾 Download</a>
     <label for="uploadFile" style="cursor:pointer;">Upload</label>
-     <input type="file" id="uploadFile" accept=".json,application/json" onchange="uploadJSON()" style="display:none;" />
-</div>
-  
+    <input type="file" id="uploadFile" accept=".json,application/json" onchange="uploadJSON()" style="display:none;" />
+  </div>
 
   <!-- Eingabeformular -->
   <form id="entryForm">
     <label>Datum: <input type="date" id="date"></label>
     <label>Land: <input type="text" id="land"></label>
-    <label>Leitzins: <input type="text" id="leitzins"></label>
-    <label>Kaufkurs (1J): <input type="text" id="bond_kaufkurs"></label>
+    <label>Leitzins: <input type="number" step="0.01" id="leitzins"></label>
+    <label>Kaufkurs (1J): <input type="number" step="0.01" id="bond_kaufkurs"></label>
     <label>Status/Event: <input type="text" id="status"></label>
     <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
   </form>
@@ -88,28 +87,26 @@
   </table>
 
   <script>
-    let data = [
-      {"date":"2000-03-10","land":"USA","leitzins":6.5,"bond_kaufkurs":94.5,"status":"Dotcom-Blase Höhepunkt"},
-      {"date":"2001-02-21","land":"TR","leitzins":62.0,"bond_kaufkurs":72.0,"status":"Türkei Bankenkrise"},
-      {"date":"2008-09-15","land":"USA","leitzins":2.0,"bond_kaufkurs":98.3,"status":"Lehman Brothers Pleite"},
-      {"date":"2010-05-01","land":"EU","leitzins":1.0,"bond_kaufkurs":99.1,"status":"Eurokrise"},
-      {"date":"2018-08-15","land":"TR","leitzins":17.75,"bond_kaufkurs":85.0,"status":"Lira-Krise"},
-      {"date":"2020-03-15","land":"USA","leitzins":0.25,"bond_kaufkurs":99.8,"status":"Corona-Crash"},
-      {"date":"2026-08-25","land":"TRY","leitzins":37,"bond_kaufkurs":86.24,"status":"Aktuell"},
-      {"date":"2026-08-25","land":"USA","leitzins":3.63,"bond_kaufkurs":98.5,"status":"Aktuell"},
-      {"date":"2026-08-25","land":"ENG","leitzins":4,"bond_kaufkurs":96,"status":"Aktuell"},
-      {"date":"2026-08-25","land":"JPY","leitzins":0.5,"bond_kaufkurs":99,"status":"Aktuell"},
-      {"date":"2026-08-25","land":"EZB","leitzins":2.4,"bond_kaufkurs":97.4,"status":"Aktuell"}
-    ];
+    let data = [];
+
+    async function loadData() {
+      try {
+        const res = await fetch("data/stats.json");
+        data = await res.json();
+        renderTable();
+      } catch (e) {
+        console.error("Konnte data/stats.json nicht laden:", e);
+      }
+    }
 
     function renderTable() {
       const tbody = document.getElementById("tableBody");
       tbody.innerHTML = "";
       data.forEach((entry, index) => {
         const row = document.createElement("tr");
-        Object.values(entry).forEach(val => {
+        ["date","land","leitzins","bond_kaufkurs","status"].forEach(key => {
           const cell = document.createElement("td");
-          cell.textContent = val;
+          cell.textContent = entry[key];
           row.appendChild(cell);
         });
         const delCell = document.createElement("td");
@@ -126,8 +123,8 @@
       const newEntry = {
         date: document.getElementById("date").value,
         land: document.getElementById("land").value,
-        leitzins: document.getElementById("leitzins").value,
-        bond_kaufkurs: document.getElementById("bond_kaufkurs").value,
+        leitzins: parseFloat(document.getElementById("leitzins").value),
+        bond_kaufkurs: parseFloat(document.getElementById("bond_kaufkurs").value),
         status: document.getElementById("status").value
       };
       data.push(newEntry);
@@ -139,17 +136,22 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "stats.json";
+      a.download = "stats.json"; // konsistent mit Repo
       a.click();
       URL.revokeObjectURL(url);
     }
 
     function uploadJSON() {
       const file = document.getElementById("uploadFile").files[0];
+      if (!file) return;
       const reader = new FileReader();
       reader.onload = e => {
-        data = JSON.parse(e.target.result);
-        renderTable();
+        try {
+          data = JSON.parse(e.target.result);
+          renderTable();
+        } catch (err) {
+          alert("Ungültige JSON-Datei!");
+        }
       };
       reader.readAsText(file);
     }
@@ -159,7 +161,7 @@
         document.body.style.backgroundColor === "black" ? "#111" : "black";
     }
 
-    renderTable();
+    loadData();
   </script>
 </body>
 </html>
