@@ -1,6 +1,34 @@
 [
   {
-    "datum": "Juli 2026",
+    "date": "2000-03-10",
+    "land": "USA",
+    "M2": 4700,
+    "M3": 6500,
+    "event": "Dotcom-Blase Höhepunkt"
+  },
+  {
+    "date": "2008-09-15",
+    "land": "USA",
+    "M2": 7500,
+    "M3": 10500,
+    "event": "Lehman Brothers Pleite"
+  },
+  {
+    "date": "2010-05-01",
+    "land": "EU",
+    "M2": 9000,
+    "M3": 12000,
+    "event": "Eurokrise"
+  },
+  {
+    "date": "2020-03-15",
+    "land": "USA",
+    "M2": 15000,
+    "M3": null,
+    "event": "Corona-Crash"
+  },
+  {
+    "date": "2026-07-01",
     "land": "USA",
     "M2": "23.003 Mrd. USD",
     "M3": "≈23.5 Tsd. Mrd. USD",
@@ -8,7 +36,7 @@
     "zinserwartung": "Erhöhung"
   },
   {
-    "datum": "Juli 2026",
+    "date": "2026-07-01",
     "land": "TR",
     "M2": "28,144,251,947 Tsd. TRY",
     "M3": "30,981,744,199 Tsd. TRY",
@@ -16,7 +44,7 @@
     "zinserwartung": "Halten"
   },
   {
-    "datum": "Juli 2026",
+    "date": "2026-07-01",
     "land": "JPY",
     "M2": "1,641.2 Bio. JPY",
     "M3": "1,637.2 Bio. JPY",
@@ -24,7 +52,7 @@
     "zinserwartung": "Reduzierung"
   },
   {
-    "datum": "Juli 2026",
+    "date": "2026-07-01",
     "land": "EZB",
     "M2": "16,411 Mrd. EUR",
     "M3": "17,611 Mrd. EUR",
