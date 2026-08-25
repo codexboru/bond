@@ -187,5 +187,24 @@
       reader.readAsText(file);
     }
   </script>
+
+  <script>
+  fetch('data/money.json')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector('#moneyTable tbody');
+      data.forEach(entry => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${entry.land}</td>
+          <td>${entry.monat}/${entry.jahr}</td>
+          <td>${entry.M2}</td>
+          <td>${entry.M3}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(err => console.error('Fehler beim Laden money.json:', err));
+  </script>
 </body>
 </html>
