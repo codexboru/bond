@@ -20,11 +20,11 @@ jobs:
           jq . data/money.json
           jq . data/stats.json
 
-      - name: Create Release Archive
+      - name: Create Release Archives
         run: |
           mkdir release
-          cp data/money.json data/stats.json money.html stats.html README.md release/
-          tar -czf bond-${{ github.ref_name }}.tar.gz release
+          cp data/money.json data/stats.json money.html stats.html README.md LICENSE favicon.png README.html release/
+          tar -czf bond-${{ github.ref_name }}.tar.gz -C release .
           zip -r bond-${{ github.ref_name }}.zip release
 
       - name: Upload Release Assets
