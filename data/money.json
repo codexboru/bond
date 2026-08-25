@@ -2,28 +2,28 @@
   {
     "date": "2000-03-10",
     "land": "USA",
-    "M2": 4700,
-    "M3": 6500,
+    "M2": "4.7 Bio. USD",
+    "M3": "6.5 Bio. USD",
     "event": "Dotcom-Blase Höhepunkt"
   },
   {
     "date": "2008-09-15",
     "land": "USA",
-    "M2": 7500,
-    "M3": 10500,
+    "M2": "7.5 Bio. USD",
+    "M3": "10.5 Bio. USD",
     "event": "Lehman Brothers Pleite"
   },
   {
     "date": "2010-05-01",
     "land": "EU",
-    "M2": 9000,
-    "M3": 12000,
+    "M2": "9 Bio. EUR",
+    "M3": "12 Bio. EUR",
     "event": "Eurokrise"
   },
   {
     "date": "2020-03-15",
     "land": "USA",
-    "M2": 15000,
+    "M2": "15 Bio. USD",
     "M3": null,
     "event": "Corona-Crash"
   },
