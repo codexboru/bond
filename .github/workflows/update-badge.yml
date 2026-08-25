@@ -3,19 +3,22 @@ name: Update Version Badge
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'   # läuft nur bei Tags wie v2026.07.01
+
+permissions:
+  contents: write
 
 jobs:
   update-badge:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Update README Badge
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
-          sed -i "s/version-v[0-9]\+\.[0-9]\+\.[0-9]\+-blue.svg/version-${VERSION}-blue.svg/" README.md
+          sed -i "s/version-v[0-9]\+\.[0-9]\+\.[0-9]\+\-blue.svg/version-${VERSION}-blue.svg/" README.md
           sed -i "s/v[0-9]\+\.[0-9]\+\.[0-9]\+/ ${VERSION}/" README.md
 
       - name: Commit and Push Changes
@@ -23,5 +26,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add README.md
-          git commit -m "Update version badge to ${GITHUB_REF#refs/tags/}"
+          git commit -m "Update version badge to ${VERSION}"
           git push
