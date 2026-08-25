@@ -1,32 +1,60 @@
 [
   {
+    "date": "2000-03-10",
+    "land": "USA",
+    "leitzins": 6.5,
+    "bond_1y": 6.0,
+    "event": "Dotcom-Blase Höhepunkt"
+  },
+  {
+    "date": "2008-09-15",
+    "land": "USA",
+    "leitzins": 2.0,
+    "bond_1y": 1.7,
+    "event": "Lehman Brothers Pleite"
+  },
+  {
+    "date": "2010-05-01",
+    "land": "EU",
+    "leitzins": 1.0,
+    "bond_1y": 0.9,
+    "event": "Eurokrise"
+  },
+  {
+    "date": "2020-03-15",
+    "land": "USA",
+    "leitzins": 0.25,
+    "bond_1y": 0.2,
+    "event": "Corona-Crash"
+  },
+  {
     "date": "2026-08-25",
     "land": "TRY",
     "leitzins": 37,
-    "bond": 86.24
+    "bond_1y": 86.24
   },
   {
     "date": "2026-08-25",
     "land": "USA",
     "leitzins": 3.63,
-    "bond": 98.5
+    "bond_1y": 98.5
   },
   {
     "date": "2026-08-25",
     "land": "ENG",
     "leitzins": 4,
-    "bond": 96
+    "bond_1y": 96
   },
   {
     "date": "2026-08-25",
     "land": "JPY",
     "leitzins": 0.5,
-    "bond": 99
+    "bond_1y": 99
   },
   {
     "date": "2026-08-25",
     "land": "EZB",
     "leitzins": 2.4,
-    "bond": 97.4
+    "bond_1y": 97.4
   }
 ]
