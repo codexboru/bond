@@ -1,0 +1,26 @@
+name: Release Workflow
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Update README.md Version Badge
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          sed -i "s|https://img.shields.io/badge/version-.*-blue.svg|https://img.shields.io/badge/version-${VERSION}-blue.svg|" README.md
+
+      - name: Commit & Push Änderungen
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add README.md
+          git commit -m "Update Version Badge to ${VERSION}"
+          git push
