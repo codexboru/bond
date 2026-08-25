@@ -36,3 +36,17 @@ Trotzdem wird am Ende der Laufzeit der **Nominalwert von 100 %** ausgezahlt �
 - Alte Anleihen mit hohem Kupon steigen im Wert.  
 - Verkaufspreise steigen.  
 - Risiko‑Assets (Aktien etc.) steigen ebenfalls.  
+
+---
+
+## 📊 Leitzins mit dem Kaufkurs der Staatsanleihen
+- Datenbank von Leitzins und Anleihe Kaufkurse.
+
+---
+
+## 🐈 M2 / M3 Geldmenge
+- Wenn die zirkulierende Geldmenge in den Ländern steigt, dann wird die Zentralbank die Zinsen anheben um die Umlaufgeschwindigkeit zu reduzieren.
+-📉 Dabei gibts dann bei Staatsanleihen fallende Kurse.
+- Wenn die Zirkulierende Geldmenge in den Ländern sinkt, dann wird die Zentralbank die Zinsen senken.
+- 📈 Dabei gibts dann bei Staatsanleihen steigende Kurse für Ankauf / Verkauf.
+  Bond, Aktien High risk Assets.
