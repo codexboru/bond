@@ -3,29 +3,27 @@ name: Release Archive
 on:
   push:
     tags:
-      - 'v*.*.*'   # reagiert auf Tags wie v1.0.0, v1.1.0 usw.
+      - 'v*.*.*'
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # nötig für Upload der Release-Assets
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Create Archives
+      - name: Create Release Archives
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          zip -r bond-${VERSION}.zip .
-          tar -czf bond-${VERSION}.tar.gz .
+          mkdir -p dist
+          zip -r dist/bond-${{ github.ref_name }}.zip .
+          tar -czf dist/bond-${{ github.ref_name }}.tar.gz .
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            bond-${VERSION}.zip
-            bond-${VERSION}.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            dist/bond-${{ github.ref_name }}.zip
+            dist/bond-${{ github.ref_name }}.tar.gz
