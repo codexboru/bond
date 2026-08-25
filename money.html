@@ -188,26 +188,70 @@
     }
   </script>
 
-  <script>
+<script>
+  function existsEntry(datum, land) {
+    const rows = document.querySelectorAll("#m2m3Table tr");
+    for (let i = 1; i < rows.length; i++) { // Header überspringen
+      const cells = rows[i].querySelectorAll("td");
+      if (cells.length > 0 && cells[0].innerText === datum && cells[1].innerText === land) {
+        return true; // Eintrag existiert schon
+      }
+    }
+    return false;
+  }
+
+  // fetch mit Prüfung
   fetch('data/money.json')
     .then(response => response.json())
     .then(data => {
-      const table = document.getElementById('m2m3Table'); // richtige ID
+      const table = document.getElementById('m2m3Table');
       data.forEach(entry => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.monat} ${entry.jahr}</td>
-          <td>${entry.land}</td>
-          <td>${entry.M2}</td>
-          <td>${entry.M3}</td>
-          <td>${entry.status}</td>
-          <td>${entry.zinserwartung}</td>
-          <td><button onclick="deleteRow(this)">X</button></td>
-        `;
-        table.appendChild(row);
+        if (!existsEntry(entry.datum, entry.land)) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${entry.datum}</td>
+            <td>${entry.land}</td>
+            <td>${entry.M2}</td>
+            <td>${entry.M3}</td>
+            <td>${entry.status}</td>
+            <td>${entry.zinserwartung}</td>
+            <td><button onclick="deleteRow(this)">X</button></td>
+          `;
+          table.appendChild(row);
+        }
       });
     })
     .catch(err => console.error('Fehler beim Laden money.json:', err));
+
+  // upload mit Prüfung
+  function uploadJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const data = JSON.parse(e.target.result);
+      const table = document.getElementById("m2m3Table");
+      // alte Zeilen entfernen
+      table.querySelectorAll("tr:not(:first-child)").forEach(r => r.remove());
+      // neue Zeilen hinzufügen mit Prüfung
+      data.forEach(item => {
+        if (!existsEntry(item.datum, item.land)) {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.datum}</td>
+            <td>${item.land}</td>
+            <td>${item.M2}</td>
+            <td>${item.M3}</td>
+            <td>${item.status}</td>
+            <td>${item.zinserwartung}</td>
+            <td><button onclick="deleteRow(this)">X</button></td>
+          `;
+          table.appendChild(row);
+        }
+      });
+    };
+    reader.readAsText(file);
+  }
 </script>
 </body>
 </html>
