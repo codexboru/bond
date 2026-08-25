@@ -35,26 +35,29 @@
       gap: 8px;
       margin-bottom: 12px;
     }
-    .nav button {
+    .nav a, .nav button {
       border: 1px solid #00ff00;
       background-color: black;
       color: #00ff00;
       font-family: monospace;
+      text-decoration: none;
+      padding: 6px 12px;
     }
   </style>
 </head>
 <body>
   <h1>Zinsen & Staatsanleihen – Übersicht</h1>
 
-  <!-- Navigation Buttons -->
+  <!-- Navigation Buttons mit Links -->
   <div class="nav">
-    <button>☀️ 🌙</button>
-    <button>😶‍🌫️ Codexboru</button>
-    <button>🕹 README.md</button>
-    <button>🐈 M2 / M3</button>
-    <button>📊 Stats</button>
-    <button onclick="downloadJSON()">💾 Download</button>
-    <input type="file" id="uploadFile" onchange="uploadJSON()" />
+    <a href="#" onclick="toggleTheme()">☀️🌙</a>
+    <a href="index.html">😶‍🌫️ Codexboru</a>
+    <a href="README.html">🕹 README.md</a>
+    <a href="money.html">🐈 M2 / M3</a>
+    <a href="stats.html">📊 Stats</a>
+    <a href="#" onclick="downloadJSON()">💾 Download</a>
+    <label for="uploadFile" style="cursor:pointer;">Upload</label>
+    <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
   </div>
 
   <!-- Eingabeformular -->
@@ -147,6 +150,11 @@
         renderTable();
       };
       reader.readAsText(file);
+    }
+
+    function toggleTheme() {
+      document.body.style.backgroundColor =
+        document.body.style.backgroundColor === "black" ? "#111" : "black";
     }
 
     renderTable();
