@@ -25,8 +25,8 @@
     .yellow { background-color: #f9a825; }
     .red { background-color: #c62828; }
     button {
-      margin: 10px;
-      padding: 8px 12px;
+      margin: 5px;
+      padding: 6px 10px;
       background-color: #444;
       color: #eee;
       border: none;
@@ -35,10 +35,43 @@
     button:hover {
       background-color: #666;
     }
+    .nav {
+      margin: 15px 0;
+    }
   </style>
 </head>
 <body>
   <h1>M2/M3 Geldmengen – Übersicht</h1>
+
+  <!-- Navigation -->
+  <div class="nav">
+    <button onclick="window.location.href='https://github.com/deinprofil'">GitHub Profil</button>
+    <button onclick="window.location.href='README.html'">README</button>
+    <button onclick="window.location.href='stats.html'">Stats</button>
+    <button onclick="window.location.href='index.html'">Index</button>
+  </div>
+
+  <!-- Manuelle Eingabe -->
+  <h2>Neuen Eintrag hinzufügen</h2>
+  <form id="entryForm">
+    <label>Land:
+      <select id="land">
+        <option>USA</option>
+        <option>TR</option>
+        <option>UK</option>
+        <option>JPY</option>
+        <option>EZB</option>
+      </select>
+    </label>
+    <label>Monat: <input type="text" id="monat" placeholder="z.B. Juli"></label>
+    <label>Jahr: <input type="number" id="jahr" value="2026"></label>
+    <label>M2: <input type="text" id="m2"></label>
+    <label>M3: <input type="text" id="m3"></label>
+    <label>Status: <input type="text" id="status"></label>
+    <button type="button" onclick="addEntry()">Hinzufügen</button>
+  </form>
+
+  <!-- Tabelle -->
   <table id="m2m3Table">
     <tr>
       <th>Datum</th>
@@ -46,6 +79,8 @@
       <th>M2</th>
       <th>M3</th>
       <th>Status</th>
+      <th>Zinserwartung</th>
+      <th>Löschen</th>
     </tr>
     <tr>
       <td>Juli 2026</td>
@@ -53,34 +88,53 @@
       <td>23.003 Mrd. USD</td>
       <td>≈23.5 Tsd. Mrd. USD</td>
       <td class="red">Überhitzung</td>
-    </tr>
-    <tr>
-      <td>Juli 2026</td>
-      <td>Eurozone</td>
-      <td>16.411 Mrd. EUR</td>
-      <td>17.611 Mrd. EUR</td>
-      <td class="yellow">Stagnation</td>
-    </tr>
-    <tr>
-      <td>Juli 2026</td>
-      <td>Türkei</td>
-      <td>28,14 Bio. TRY</td>
-      <td>30,98 Bio. TRY</td>
-      <td class="red">Inflationsdruck</td>
-    </tr>
-    <tr>
-      <td>Juli 2026</td>
-      <td>Japan</td>
-      <td>12.970.074 Mrd. JPY</td>
-      <td>+1,4 % YoY</td>
-      <td class="green">Niedrige Umlaufgeschwindigkeit</td>
+      <td>Erhöhung</td>
+      <td><button onclick="deleteRow(this)">X</button></td>
     </tr>
   </table>
 
   <button onclick="downloadJSON()">Download JSON</button>
   <input type="file" id="uploadJSON" accept=".json" onchange="uploadJSON(event)">
-  
+
   <script>
+    function zinserwartung(status) {
+      if (status.toLowerCase().includes("überhitzung") || status.toLowerCase().includes("inflation")) {
+        return "Erhöhung";
+      } else if (status.toLowerCase().includes("niedrig") || status.toLowerCase().includes("stagnation")) {
+        return "Reduzierung";
+      } else {
+        return "Halten";
+      }
+    }
+
+    function addEntry() {
+      const land = document.getElementById("land").value;
+      const monat = document.getElementById("monat").value;
+      const jahr = document.getElementById("jahr").value;
+      const m2 = document.getElementById("m2").value;
+      const m3 = document.getElementById("m3").value;
+      const status = document.getElementById("status").value;
+      const zinserw = zinserwartung(status);
+
+      const table = document.getElementById("m2m3Table");
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${monat} ${jahr}</td>
+        <td>${land}</td>
+        <td>${m2}</td>
+        <td>${m3}</td>
+        <td>${status}</td>
+        <td>${zinserw}</td>
+        <td><button onclick="deleteRow(this)">X</button></td>
+      `;
+      table.appendChild(row);
+    }
+
+    function deleteRow(btn) {
+      const row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+
     function downloadJSON() {
       const table = document.getElementById("m2m3Table");
       const rows = table.querySelectorAll("tr");
@@ -94,7 +148,8 @@
             land: cells[1].innerText,
             M2: cells[2].innerText,
             M3: cells[3].innerText,
-            status: cells[4].innerText
+            status: cells[4].innerText,
+            zinserwartung: cells[5].innerText
           });
         }
       });
@@ -123,6 +178,8 @@
             <td>${item.M2}</td>
             <td>${item.M3}</td>
             <td>${item.status}</td>
+            <td>${item.zinserwartung}</td>
+            <td><button onclick="deleteRow(this)">X</button></td>
           `;
           table.appendChild(row);
         });
