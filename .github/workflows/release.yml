@@ -1,0 +1,40 @@
+name: Release v2026.07.01
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v2026.07.01'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Validate JSON
+        run: |
+          jq . money.json
+          jq . stats.json
+
+      - name: Create Release Archive
+        run: |
+          mkdir release
+          cp money.json stats.json money.html stats.html README.md release/
+          tar -czf bond-v2026.07.01.tar.gz release
+          zip -r bond-v2026.07.01.zip release
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v2026.07.01
+          name: "Release v2026.07.01"
+          files: |
+            bond-v2026.07.01.tar.gz
+            bond-v2026.07.01.zip
