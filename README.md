@@ -2,7 +2,7 @@
 Dieses Projekt steht unter der MIT-Lizenz. 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v1.1.0-blue.svg)](https://github.com/codexboru/bond/releases)
+[![Version](https://img.shields.io/badge/version-v2026.07.01-blue.svg)](https://github.com/codexboru/bond/releases)
 [![View Demo](https://img.shields.io/badge/View-Demo-blue.svg)](https://codexboru.github.io/bond/index.html)
 [![Made with ❤️ by Codexboru](https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg)](https://github.com/codexboru)
 [![Download Release](https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange)](https://github.com/codexboru/bond/releases/latest)
