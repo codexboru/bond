@@ -146,17 +146,17 @@
     <button onclick="addEntry()">Eintrag hinzufügen</button>
   </div>
 
-  <button onclick="downloadJSON()">Download JSON</button>
+  <button onclick="downloadJSON()">Download</button>
   <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON(event)" style="display:none" />
-  <button onclick="document.getElementById('uploadFile').click()">Upload JSON</button>
+  <button onclick="document.getElementById('uploadFile').click()">Upload</button>
 
   <table id="matrix">
     <tr>
       <th onclick="sortTable(1)">Land</th>
       <th>Datum</th>
       <th>Leitzins</th>
-      <th>1J Staatsanleihe</th>
-      <th>Aktion</th>
+      <th>1J Bond</th>
+      <th>Delete</th>
     </tr>
   </table>
 </body>
