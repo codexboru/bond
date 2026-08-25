@@ -27,11 +27,38 @@
     }
     .btn {
       cursor: pointer;
+      padding: 6px 12px;
+      margin: 2px;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .nav a, .nav button {
+      border: 1px solid #00ff00;
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      text-decoration: none;
+      padding: 6px 12px;
     }
   </style>
 </head>
 <body>
   <h1>M2/M3 Geldmengen – Übersicht</h1>
+
+  <!-- Navigation Buttons mit Links -->
+  <div class="nav">
+    <a href="#" onclick="toggleTheme()">☀️🌙</a>
+    <a href="index.html">😶‍🌫️ Codexboru</a>
+    <a href="README.html">🕹 README.md</a>
+    <a href="money.html">🐈 M2 / M3</a>
+    <a href="stats.html">📊 Stats</a>
+    <a href="#" onclick="downloadJSON()">💾 Download</a>
+    <label for="uploadFile" style="cursor:pointer;">💉 Upload</label>
+    <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
+  </div>
 
   <!-- Eingabeformular -->
   <form id="entryForm">
@@ -39,11 +66,9 @@
     <label>Land: <input type="text" id="land"></label>
     <label>M2: <input type="text" id="m2"></label>
     <label>M3: <input type="text" id="m3"></label>
-    <label>Status: <input type="text" id="status"></label>
+    <label>Status/Event: <input type="text" id="status"></label>
     <label>Zinserwartung: <input type="text" id="zinserwartung"></label>
     <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
-    <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
-    <input type="file" id="uploadFile" onchange="uploadJSON()" />
   </form>
 
   <!-- Tabelle -->
@@ -54,7 +79,7 @@
         <th>Land</th>
         <th>M2</th>
         <th>M3</th>
-        <th>Status</th>
+        <th>Status/Event</th>
         <th>Zinserwartung</th>
         <th>Löschen</th>
       </tr>
@@ -129,7 +154,12 @@
       reader.readAsText(file);
     }
 
+    function toggleTheme() {
+      document.body.style.backgroundColor =
+        document.body.style.backgroundColor === "black" ? "#111" : "black";
+    }
+
     renderTable();
   </script>
 </body>
-      </html>
+</html>
