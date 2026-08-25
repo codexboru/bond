@@ -2,214 +2,132 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Hybrid: Leitzins & Staatsanleihen</title>
+  <title>Zinsen & Staatsanleihen – Übersicht</title>
   <style>
     body {
-      background-color: #000;
-      color: #0f0;
-      font-family: "Press Start 2P", monospace;
-      padding: 20px;
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
     }
-    h1 { text-align: center; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 2px solid #0f0; padding: 8px; text-align: center; }
-    th { background-color: #111; cursor: pointer; }
-    button {
-      background-color: #111;
-      color: #0f0;
-      border: 2px solid #0f0;
-      padding: 6px 12px;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #00ff00;
+      padding: 6px;
+      text-align: left;
+    }
+    input, select, button {
+      background-color: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      font-family: monospace;
+      margin: 4px;
+    }
+    .btn {
       cursor: pointer;
-      font-family: "Press Start 2P", monospace;
-      margin: 4px;
-    }
-    button:hover { background-color: #0f0; color: #000; }
-    input, select {
-      background-color: #111;
-      color: #0f0;
-      border: 2px solid #0f0;
-      padding: 4px;
-      margin: 4px;
-      font-family: "Press Start 2P", monospace;
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Zinsen & Staatsanleihen – Übersicht</h1>
+
+  <!-- Eingabeformular -->
+  <form id="entryForm">
+    <label>Datum: <input type="date" id="date"></label>
+    <label>Land: <input type="text" id="land"></label>
+    <label>Leitzins: <input type="text" id="leitzins"></label>
+    <label>Kaufkurs (1J): <input type="text" id="bond_kaufkurs"></label>
+    <label>Status/Event: <input type="text" id="status"></label>
+    <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
+    <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
+    <input type="file" id="uploadFile" onchange="uploadJSON()" />
+  </form>
+
+  <!-- Tabelle -->
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Land</th>
+        <th>Leitzins</th>
+        <th>Kaufkurs (1J)</th>
+        <th>Status/Event</th>
+        <th>Löschen</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
   <script>
-    let table;
+    let data = [
+      {"date":"2000-03-10","land":"USA","leitzins":6.5,"bond_kaufkurs":94.5,"status":"Dotcom-Blase Höhepunkt"},
+      {"date":"2001-02-21","land":"TR","leitzins":62.0,"bond_kaufkurs":72.0,"status":"Türkei Bankenkrise"},
+      {"date":"2008-09-15","land":"USA","leitzins":2.0,"bond_kaufkurs":98.3,"status":"Lehman Brothers Pleite"},
+      {"date":"2010-05-01","land":"EU","leitzins":1.0,"bond_kaufkurs":99.1,"status":"Eurokrise"},
+      {"date":"2018-08-15","land":"TR","leitzins":17.75,"bond_kaufkurs":85.0,"status":"Lira-Krise"},
+      {"date":"2020-03-15","land":"USA","leitzins":0.25,"bond_kaufkurs":99.8,"status":"Corona-Crash"},
+      {"date":"2026-08-25","land":"TRY","leitzins":37,"bond_kaufkurs":86.24,"status":"Aktuell"},
+      {"date":"2026-08-25","land":"USA","leitzins":3.63,"bond_kaufkurs":98.5,"status":"Aktuell"},
+      {"date":"2026-08-25","land":"ENG","leitzins":4,"bond_kaufkurs":96,"status":"Aktuell"},
+      {"date":"2026-08-25","land":"JPY","leitzins":0.5,"bond_kaufkurs":99,"status":"Aktuell"},
+      {"date":"2026-08-25","land":"EZB","leitzins":2.4,"bond_kaufkurs":97.4,"status":"Aktuell"}
+    ];
 
-    function saveLocal() {
-      const rows = [];
-      for (let i = 1; i < table.rows.length; i++) {
-        const cells = table.rows[i].cells;
-        rows.push({
-          date: cells[0].innerText,
-          land: cells[1].innerText,
-          leitzins: cells[2].innerText.replace(" %",""), // nur Zahl speichern
-          bond: cells[3].innerText.replace(" %","")      // nur Zahl speichern
+    function renderTable() {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+      data.forEach((entry, index) => {
+        const row = document.createElement("tr");
+        Object.values(entry).forEach(val => {
+          const cell = document.createElement("td");
+          cell.textContent = val;
+          row.appendChild(cell);
         });
-      }
-      localStorage.setItem("matrixData", JSON.stringify(rows));
-    }
-
-    function loadLocal() {
-      const stored = localStorage.getItem("matrixData");
-      if (stored) {
-        const rows = JSON.parse(stored);
-        rows.forEach(r => addRow(r.date, r.land, r.leitzins, r.bond));
-      }
-    }
-
-    function addRow(date, land, leitzins, bond) {
-      const row = table.insertRow();
-      row.insertCell(0).innerText = date;
-      row.insertCell(1).innerText = land;
-      row.insertCell(2).innerText = leitzins + " %";   // Anzeige mit %
-      row.insertCell(3).innerText = bond + " %";       // Anzeige mit %
-      const deleteCell = row.insertCell(4);
-      const btn = document.createElement("button");
-      btn.innerText = "Löschen";
-      btn.onclick = () => { table.deleteRow(row.rowIndex); saveLocal(); };
-      deleteCell.appendChild(btn);
+        const delCell = document.createElement("td");
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "X";
+        delBtn.onclick = () => { data.splice(index,1); renderTable(); };
+        delCell.appendChild(delBtn);
+        row.appendChild(delCell);
+        tbody.appendChild(row);
+      });
     }
 
     function addEntry() {
-      const date = document.getElementById("date").value;
-      const land = document.getElementById("land").value;
-      const leitzins = document.getElementById("leitzins").value;
-      const bond = document.getElementById("bond").value;
-      if (!date || !land || !leitzins || !bond) {
-        alert("Bitte alle Felder ausfüllen!");
-        return;
-      }
-      addRow(date, land, leitzins, bond);
-      saveLocal();
+      const newEntry = {
+        date: document.getElementById("date").value,
+        land: document.getElementById("land").value,
+        leitzins: document.getElementById("leitzins").value,
+        bond_kaufkurs: document.getElementById("bond_kaufkurs").value,
+        status: document.getElementById("status").value
+      };
+      data.push(newEntry);
+      renderTable();
     }
 
     function downloadJSON() {
-      const stored = localStorage.getItem("matrixData");
-      if (!stored) return;
-      const blob = new Blob([stored], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "matrixData.json";
+      a.download = "stats.json";
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    function uploadJSON(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+    function uploadJSON() {
+      const file = document.getElementById("uploadFile").files[0];
       const reader = new FileReader();
-      reader.onload = function(e) {
-        const rows = JSON.parse(e.target.result);
-        table.innerHTML = "<tr><th onclick='sortTable(1)'>Land</th><th>Datum</th><th>Leitzins</th><th>1J Staatsanleihe</th><th>Aktion</th></tr>";
-        rows.forEach(r => addRow(r.date, r.land, r.leitzins, r.bond)); // hier wieder % anhängen
-        saveLocal();
+      reader.onload = e => {
+        data = JSON.parse(e.target.result);
+        renderTable();
       };
       reader.readAsText(file);
     }
 
-    function sortTable(colIndex) {
-      let rows = Array.from(table.rows).slice(1);
-      rows.sort((a, b) => a.cells[colIndex].innerText.localeCompare(b.cells[colIndex].innerText));
-      rows.forEach(r => table.appendChild(r));
-    }
-
-    window.onload = () => {
-      table = document.getElementById("matrix");
-      loadLocal();
-    };
-  </script>
-</head>
-<body>
-  <h1>Hybrid: Leitzins & Staatsanleihen</h1>
-
-  <!-- Navigation Buttons -->
-  <div style="text-align:center; margin-bottom:20px;">
-    <button onclick="location.href='https://codexboru.github.io/bond/README.html'">🕹 README</button>
-    <button onclick="location.href='https://codexboru.github.io/bond/index.html'">🕳 Bond</button>
-    <button onclick="location.href='https://github.com/codexboru'">😶‍🌫️ Codexboru Profil</button>
-    <button onclick="location.href='https://codexboru.github.io/bond/money.html'">🐈 M2 / M3</button>
-  </div>
-
-  <div>
-    <input type="date" id="date">
-    <select id="land">
-      <option value="USA">USA</option>
-      <option value="EZB">EZB</option>
-      <option value="TRY">TRY</option>
-      <option value="JPY">JPY</option>
-      <option value="ENG">ENG</option>
-    </select>
-    <input type="number" id="leitzins" placeholder="Leitzins %" step="0.01">
-    <input type="number" id="bond" placeholder="1J Staatsanleihe %" step="0.01">
-    <button onclick="addEntry()">Eintrag hinzufügen</button>
-  </div>
-
-  <button onclick="downloadJSON()">Download</button>
-  <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON(event)" style="display:none" />
-  <button onclick="document.getElementById('uploadFile').click()">Upload</button>
-
-  <table id="matrix">
-    <tr>
-      <th onclick="sortTable(1)">Land</th>
-      <th>Datum</th>
-      <th>Leitzins</th>
-      <th>1J Bond</th>
-      <th>Delete</th>
-    </tr>
-  </table>
-  <script>
-  function existsEntry(date, land) {
-    const rows = table.rows;
-    for (let i = 1; i < rows.length; i++) {
-      const cells = rows[i].cells;
-      if (cells[0].innerText === date && cells[1].innerText === land) {
-        return true; // Eintrag existiert schon
-      }
-    }
-    return false;
-  }
-
-  function uploadJSON(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const rows = JSON.parse(e.target.result);
-      // Header neu setzen
-      table.innerHTML = "<tr><th onclick='sortTable(1)'>Land</th><th>Datum</th><th>Leitzins</th><th>1J Staatsanleihe</th><th>Aktion</th></tr>";
-      rows.forEach(r => {
-        if (!existsEntry(r.date, r.land)) { // nur neue Einträge
-          addRow(r.date, r.land, r.leitzins, r.bond);
-        }
-      });
-      saveLocal();
-    };
-    reader.readAsText(file);
-  }
-
-  // fetch mit Prüfung
-  fetch('data/stats.json')
-    .then(response => response.json())
-    .then(data => {
-      const table = document.getElementById('matrix');
-      data.forEach(entry => {
-        if (!existsEntry(entry.date, entry.land)) {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${entry.date}</td>
-            <td>${entry.land}</td>
-            <td>${entry.leitzins}%</td>
-            <td>${entry.bond}</td>
-            <td><button onclick="table.deleteRow(row.rowIndex)">Löschen</button></td>
-          `;
-          table.appendChild(row);
-        }
-      });
-    })
-    .catch(err => console.error('Fehler beim Laden stats.json:', err));
+    renderTable();
   </script>
 </body>
 </html>
