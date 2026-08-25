@@ -11,6 +11,7 @@
     .btn { cursor: pointer; padding: 6px 12px; margin: 2px; }
     .nav { display: flex; gap: 8px; margin-bottom: 12px; }
     .nav a { border: 1px solid #00ff00; background-color: black; color: #00ff00; text-decoration: none; padding: 6px 12px; }
+    .infobox { border: 1px solid #00ff00; padding: 10px; margin: 12px 0; background-color: #111; color: #00ff00; font-family: monospace; }
   </style>
 </head>
 <body>
@@ -25,6 +26,12 @@
     <a href="#" onclick="downloadJSON()">💾 Download</a>
     <label for="uploadFile" style="cursor:pointer;">Upload</label>
     <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON()" style="display:none;" />
+  </div>
+
+  <!-- Infobox -->
+  <div class="infobox">
+    <p><strong>Hinweis:</strong> Alle M2- und M3-Werte sind in <em>Milliarden</em> angegeben, jeweils in der <em>Landeswährung</em> des Eintrags 
+    (z. B. USD für USA, EUR für Eurozone, TRY für Türkei, JPY für Japan, GBP für England).</p>
   </div>
 
   <form id="entryForm">
@@ -65,7 +72,11 @@
         const row = document.createElement("tr");
         ["date","land","m2","m3","status"].forEach(key => {
           const cell = document.createElement("td");
-          cell.textContent = entry[key];
+          if (key === "m2" || key === "m3") {
+            cell.textContent = entry[key] + " Milliarden " + entry.land;
+          } else {
+            cell.textContent = entry[key];
+          }
           row.appendChild(cell);
         });
         const delCell = document.createElement("td");
