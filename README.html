@@ -2,84 +2,134 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>README – Bond Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>README – Bond Codexboru Edition</title>
   <style>
     body {
-      font-family: 'Press Start 2P', monospace;
+      font-family: monospace;
       background-color: #111;
-      color: #0f0;
-      margin: 20px;
-      line-height: 1.6;
+      color: #eee;
+      padding: 20px;
     }
-    h1, h2, h3 {
+    h1, h2 {
       color: #0f0;
-    }
-    ul {
-      list-style-type: square;
     }
     a {
-      color: #0f0;
+      color: #0ff;
+      text-decoration: none;
+    }
+    a:hover {
       text-decoration: underline;
     }
-    .badges {
-      display: flex;
-      gap: 10px;
-      margin: 15px 0;
-    }
-    .badge {
-      background-color: #222;
-      color: #0f0;
-      border: 2px solid #0f0;
-      padding: 5px 10px;
-      font-size: 12px;
-      text-decoration: none;
-      box-shadow: 3px 3px #0f0;
-    }
-    .badge:hover {
-      background-color: #0f0;
-      color: #111;
+    hr {
+      border: 1px solid #555;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
 
-<h1>🎮 Bond Calculator – Codexboru Edition</h1>
+  <h2>📜 <a href="LICENSE">Lizenz</a></h2>
+  <p>Dieses Projekt steht unter der MIT-Lizenz.</p>
 
-<!-- Badge-Banner mit Icons -->
-<div class="badges">
-  <a class="badge" href="LICENSE" target="_blank">📜 MIT License</a>
-  <a class="badge" href="https://github.com/codexboru" target="_blank">👤 Made with ❤️ by Codexboru</a>
-  <a class="badge" href="https://codexboru.github.io/bond/stats.html" target="_blank">📊 stats</a>
-  <a class="badge" href="https://codexboru.github.io/bond/money.html" target="_blank">🐈 M2/M3</a>
-  <a class="badge" href="https://codexboru.github.io/bond/index.html" target="_blank">🕳 bond_calculator</a>
-</div>
+  <p>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/badge/version-v1.0.0-blue.svg" alt="Version"></a>
+    <a href="https://codexboru.github.io/bond/index.html"><img src="https://img.shields.io/badge/View-Demo-blue.svg" alt="Demo"></a>
+    <a href="https://github.com/codexboru"><img src="https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg" alt="Made by Codexboru"></a>
+    <a href="https://github.com/codexboru/bond/releases/latest"><img src="https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange" alt="Latest Downloads"></a>
+    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/github/downloads/codexboru/bond/total?color=purple" alt="Total Downloads"></a>
+  </p>
 
-<p>Wenn die Leitzinsen erhöht werden, fällt der Kurs der Staatsanleihe von 100 % nach unten. 
-Trotzdem wird am Ende der Laufzeit der Nominalwert von 100 % ausgezahlt – unabhängig vom Kauf‑ oder Verkaufskurs.</p>
+  <h1>🎮 Bond – Codexboru Edition</h1>
 
-<h2>Beispiel</h2>
-<p><b>Ticker: TRB100227</b><br>
-TRB = Europäische Türkische Staatsanleihe<br>
-100227 = Ablaufdatum 10.02.27<br>
-Auszahlung: 100 % Nominalwert</p>
+  <h2>📌 Navigation</h2>
+  <ul>
+    <li>😶‍🌫️: <a href="https://github.com/codexboru/">Codexboru</a></li>
+    <li>🕳: <a href="https://codexboru.github.io/bond/index.html">Bond_calculator</a></li>
+    <li>🕹️: <a href="https://codexboru.github.io/bond/README.html">README.md</a></li>
+    <li>📊: <a href="https://codexboru.github.io/bond/stats.html">stats</a></li>
+    <li>🐈: <a href="https://codexboru.github.io/bond/money.html">M2/M3</a></li>
+  </ul>
 
-<h2>Zins ↑ → Kurs ↓</h2>
-<ul>
-  <li>Alte Anleihen verlieren an Attraktivität</li>
-  <li>Kapital fließt in neue Anleihen</li>
-  <li>Risiko‑Assets fallen</li>
-</ul>
+  <hr>
 
-<h2>Zins ↓ → Kurs ↑</h2>
-<ul>
-  <li>Alte Anleihen mit hohem Kupon steigen</li>
-  <li>Verkaufspreise steigen</li>
-  <li>Risiko‑Assets steigen</li>
-</ul>
+  <h2>🕹️ Einleitung</h2>
+  <p>Wenn die <strong>Leitzinsen erhöht</strong> werden, fällt der Kurs der Staatsanleihe von <strong>100 %</strong> nach unten.<br>
+  Trotzdem wird am Ende der Laufzeit der <strong>Nominalwert von 100 %</strong> ausgezahlt – unabhängig vom Kauf‑ oder Verkaufskurs.</p>
 
-<hr>
-<p><a href="index.html">Zurück zum Bond Calculator</a></p>
+  <h3>Beispiel:</h3>
+  <p><strong>Ticker: TRB100227</strong><br>
+  - TRB = Europäische Türkische Staatsanleihe<br>
+  - 100227 = Ablaufdatum 10.02.27<br>
+  - Auszahlung: <strong>100 % Nominalwert</strong>, egal wie der Kurs zwischendurch schwankt.</p>
+
+  <hr>
+
+  <h2>📉 Zins ↑ → Kurs ↓</h2>
+  <ul>
+    <li>Alte Anleihen verlieren an Attraktivität.</li>
+    <li>Kapital fließt in neue Anleihen mit höherem Kupon.</li>
+    <li>Risiko‑Assets (Aktien etc.) fallen.</li>
+  </ul>
+
+  <h2>📈 Zins ↓ → Kurs ↑</h2>
+  <ul>
+    <li>Alte Anleihen mit hohem Kupon steigen im Wert.</li>
+    <li>Verkaufspreise steigen.</li>
+    <li>Risiko‑Assets (Aktien etc.) steigen ebenfalls.</li>
+  </ul>
+
+  <hr>
+
+  <h2>🕳 <a href="https://codexboru.github.io/bond/index.html">bond_calculator</a></h2>
+  <p>Türkische Staatsanleihe Kaufkurs und Nominal Verkaufskurs kalkulator.<br>
+  Mit Gewinn bei Nominalwert 100 nach Ablauf Datum Rechner, sowie Investierte Summe mit Kauf Datum.<br>
+  Mit dem dazugehörigen Ticker der Anleihe.</p>
+
+  <hr>
+
+  <h2>📊 <a href="https://codexboru.github.io/bond/stats.html">Leitzins mit dem Kaufkurs der Staatsanleihen</a></h2>
+  <p>Datenbank von Leitzins und Anleihe Kaufkurse.</p>
+
+  <hr>
+
+  <h2>🐈 <a href="https://codexboru.github.io/bond/money.html">M2 / M3 Geldmenge</a></h2>
+  <p>M2/M3 ↑ → Zins ↑ → Bond ↓<br>
+  - Wenn die zirkulierende Geldmenge in den Ländern steigt, dann wird die Zentralbank die Zinsen anheben um die Umlaufgeschwindigkeit zu reduzieren.<br>
+  - 📉 Dabei gibts dann bei Staatsanleihen fallende Kurse.<br>
+  - Wenn die Zirkulierende Geldmenge in den Ländern sinkt, dann wird die Zentralbank die Zinsen senken.<br><br>
+  M2/M3 ↓ → Zins ↓ → Bond ↑<br>
+  - 📈 Dabei gibts dann bei Staatsanleihen steigende Kurse für Ankauf / Verkauf.<br>
+  Bond, Aktien High risk Assets.</p>
+
+  <hr>
+
+  <h2>📂 Data Download / Upload</h2>
+  <p>Die Anwendung unterstützt den Export und Import von JSON‑Dateien als Datenbank‑Referenzpunkte:</p>
+
+  <ul>
+    <li>
+      <strong>money.json</strong><br>
+      <a href="https://github.com/codexboru/bond/blob/main/data/money.json">➡ Direktlink zur Datei</a><br>
+      Enthält die M2/M3‑Aggregatwerte, Status und Zinserwartungen.<br>
+      → Download: erzeugt eine JSON‑Datei aus den aktuellen Tabellenwerten.<br>
+      → Upload: lädt eine bestehende <code>money.json</code> und injiziert die Daten in die Tabelle.
+    </li>
+    <li>
+      <strong>stats.json</strong><br>
+      <a href="https://github.com/codexboru/bond/blob/main/data/stats.json">➡ Direktlink zur Datei</a><br>
+      Enthält Leitzinsen und Bond‑Kurse der wichtigsten Länder.<br>
+      → Download: exportiert die Tabelle als <code>stats.json</code>.<br>
+      → Upload: liest eine bestehende Datei ein und ergänzt die Tabelle ohne Duplikate.
+    </li>
+  </ul>
+
+  <h3>🔑 Referenzpunkte</h3>
+  <ul>
+    <li><strong>Download</strong> = Sicherung der aktuellen Datenbankstände</li>
+    <li><strong>Upload</strong> = Wiederherstellung oder Austausch von Datenquellen</li>
+    <li><strong>Duplikationsprüfung</strong> = verhindert doppelte Einträge beim erneuten Laden</li>
+  </ul>
 
 </body>
-</html>
+                                                            </html>
