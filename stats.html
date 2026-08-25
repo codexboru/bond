@@ -4,64 +4,29 @@
   <meta charset="UTF-8">
   <title>Zinsen & Staatsanleihen – Übersicht</title>
   <style>
-    body {
-      background-color: black;
-      color: #00ff00;
-      font-family: monospace;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #00ff00;
-      padding: 6px;
-      text-align: left;
-    }
-    input, select, button {
-      background-color: black;
-      color: #00ff00;
-      border: 1px solid #00ff00;
-      font-family: monospace;
-      margin: 4px;
-    }
-    .btn {
-      cursor: pointer;
-      padding: 6px 12px;
-      margin: 2px;
-    }
-    .nav {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .nav a, .nav button {
-      border: 1px solid #00ff00;
-      background-color: black;
-      color: #00ff00;
-      font-family: monospace;
-      text-decoration: none;
-      padding: 6px 12px;
-    }
+    body { background-color: black; color: #00ff00; font-family: monospace; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #00ff00; padding: 6px; text-align: left; }
+    input, button { background-color: black; color: #00ff00; border: 1px solid #00ff00; font-family: monospace; margin: 4px; }
+    .btn { cursor: pointer; padding: 6px 12px; margin: 2px; }
+    .nav { display: flex; gap: 8px; margin-bottom: 12px; }
+    .nav a { border: 1px solid #00ff00; background-color: black; color: #00ff00; text-decoration: none; padding: 6px 12px; }
   </style>
 </head>
 <body>
   <h1>Zinsen & Staatsanleihen – Übersicht</h1>
 
-  <!-- Navigation -->
   <div class="nav">
     <a href="#" onclick="toggleTheme()">☀️🌙</a>
     <a href="index.html">🕳 bond_calculator</a>
     <a href="README.html">🕹 README.md</a>
-    <a href="https://www.github.com/codexboru">😶‍🌫️ codexboru profile</a>
     <a href="money.html">🐈 M2 / M3</a>
     <a href="stats.html">📊 Stats</a>
     <a href="#" onclick="downloadJSON()">💾 Download</a>
     <label for="uploadFile" style="cursor:pointer;">Upload</label>
-    <input type="file" id="uploadFile" accept=".json,application/json" onchange="uploadJSON()" style="display:none;" />
+    <input type="file" id="uploadFile" accept=".json" onchange="uploadJSON()" style="display:none;" />
   </div>
 
-  <!-- Eingabeformular -->
   <form id="entryForm">
     <label>Datum: <input type="date" id="date"></label>
     <label>Land: <input type="text" id="land"></label>
@@ -71,16 +36,10 @@
     <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
   </form>
 
-  <!-- Tabelle -->
   <table id="dataTable">
     <thead>
       <tr>
-        <th>Datum</th>
-        <th>Land</th>
-        <th>Leitzins</th>
-        <th>Kaufkurs (1J)</th>
-        <th>Status/Event</th>
-        <th>Löschen</th>
+        <th>Datum</th><th>Land</th><th>Leitzins</th><th>Kaufkurs (1J)</th><th>Status/Event</th><th>Löschen</th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -136,7 +95,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "stats.json"; // konsistent mit Repo
+      a.download = "stats.json";
       a.click();
       URL.revokeObjectURL(url);
     }
