@@ -3,7 +3,7 @@ name: Release Archive
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'   # läuft nur bei Tags wie v2026.07.01
 
 permissions:
   contents: write
@@ -12,18 +12,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Create Release Archives
+      - name: Validate JSON
         run: |
-          mkdir -p dist
-          zip -r dist/bond-${{ github.ref_name }}.zip .
-          tar -czf dist/bond-${{ github.ref_name }}.tar.gz .
+          jq . money.json
+          jq . stats.json
+
+      - name: Create Release Archive
+        run: |
+          mkdir release
+          cp money.json stats.json money.html stats.html README.md release/
+          tar -czf bond-${{ github.ref_name }}.tar.gz release
+          zip -r bond-${{ github.ref_name }}.zip release
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release ${{ github.ref_name }}"
           files: |
-            dist/bond-${{ github.ref_name }}.zip
-            dist/bond-${{ github.ref_name }}.tar.gz
+            bond-${{ github.ref_name }}.tar.gz
+            bond-${{ github.ref_name }}.zip
