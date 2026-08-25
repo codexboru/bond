@@ -22,10 +22,10 @@ jobs:
 
       - name: Create Release Archives
         run: |
-          mkdir release
-          cp data/money.json data/stats.json money.html stats.html README.md LICENSE favicon.png README.html release/
-          tar -czf bond-${{ github.ref_name }}.tar.gz -C release .
-          zip -r bond-${{ github.ref_name }}.zip release
+          mkdir dist
+          cp index.html money.html stats.html README.html README.md LICENSE favicon.png data/money.json data/stats.json dist/
+          tar -czf bond-${{ github.ref_name }}.tar.gz -C dist .
+          zip -r bond-${{ github.ref_name }}.zip dist
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
