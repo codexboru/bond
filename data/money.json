@@ -28,6 +28,20 @@
     "event": "Corona-Crash"
   },
   {
+    "date": "2001-02-21",
+    "land": "TR",
+    "M2": "37 Mrd. USD (äquivalent TRY)",
+    "M3": "42 Mrd. USD (äquivalent TRY)",
+    "event": "Türkei Bankenkrise 2001"
+  },
+  {
+    "date": "2018-08-15",
+    "land": "TR",
+    "M2": "1,5 Bio. TRY",
+    "M3": "1,8 Bio. TRY",
+    "event": "Lira-Krise 2018"
+  },
+  {
     "date": "2026-07-01",
     "land": "USA",
     "M2": "23.003 Mrd. USD",
