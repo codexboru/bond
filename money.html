@@ -192,19 +192,22 @@
   fetch('data/money.json')
     .then(response => response.json())
     .then(data => {
-      const tbody = document.querySelector('#moneyTable tbody');
+      const table = document.getElementById('m2m3Table'); // statt moneyTable
       data.forEach(entry => {
         const row = document.createElement('tr');
         row.innerHTML = `
+          <td>${entry.monat} ${entry.jahr}</td>
           <td>${entry.land}</td>
-          <td>${entry.monat}/${entry.jahr}</td>
           <td>${entry.M2}</td>
           <td>${entry.M3}</td>
+          <td>${entry.status}</td>
+          <td>${entry.zinserwartung}</td>
+          <td><button onclick="deleteRow(this)">X</button></td>
         `;
-        tbody.appendChild(row);
+        table.appendChild(row);
       });
     })
     .catch(err => console.error('Fehler beim Laden money.json:', err));
-  </script>
+                </script>
 </body>
 </html>
