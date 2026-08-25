@@ -5,6 +5,9 @@ Dieses Projekt steht unter der MIT-Lizenz.
 [![Version](https://img.shields.io/badge/version-v1.0.0-blue.svg)](https://github.com/codexboru/bond/releases)
 [![View Demo](https://img.shields.io/badge/View-Demo-blue.svg)](https://codexboru.github.io/bond/index.html)
 [![Made with ❤️ by Codexboru](https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg)](https://github.com/codexboru)
+[![Download Release](https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange)](https://github.com/codexboru/bond/releases/latest)
+
+[![Total Downloads](https://img.shields.io/github/downloads/codexboru/bond/total?color=purple)](https://github.com/codexboru/bond/releases)
 
 # 🎮 Bond – Codexboru Edition 
 
