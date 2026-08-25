@@ -1,4 +1,4 @@
-## 📜 [Lizenz](LICENSE)
+## 📜 [Lizenz](https://codexboru.github.io/bond/LICENSE.html)
 Dieses Projekt steht unter der MIT-Lizenz. 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
