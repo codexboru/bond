@@ -160,5 +160,23 @@
       <th>Delete</th>
     </tr>
   </table>
+  <script>
+  fetch('data/stats.json')
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector('#statsTable tbody');
+      data.forEach(entry => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${entry.date}</td>
+          <td>${entry.land}</td>
+          <td>${entry.leitzins}%</td>
+          <td>${entry.bond}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(err => console.error('Fehler beim Laden stats.json:', err));
+    </script>
 </body>
 </html>
