@@ -1,16 +1,32 @@
 [
   {
-    "land": "TR",
-    "monat": "08",
-    "jahr": "2026",
-    "leitzins": 50.00,
-    "bond_kaufkurs": 92.50
+    "date": "2026-08-25",
+    "land": "TRY",
+    "leitzins": 37,
+    "bond": 86.24
   },
   {
+    "date": "2026-08-25",
     "land": "USA",
-    "monat": "08",
-    "jahr": "2026",
-    "leitzins": 5.25,
-    "bond_kaufkurs": 98.20
+    "leitzins": 3.63,
+    "bond": 98.5
+  },
+  {
+    "date": "2026-08-25",
+    "land": "ENG",
+    "leitzins": 4,
+    "bond": 96
+  },
+  {
+    "date": "2026-08-25",
+    "land": "JPY",
+    "leitzins": 0.5,
+    "bond": 99
+  },
+  {
+    "date": "2026-08-25",
+    "land": "EZB",
+    "leitzins": 2.4,
+    "bond": 97.4
   }
 ]
