@@ -10,6 +10,7 @@
 - 😶‍🌫️: [Codexboru](https://github.com/codexboru/)  
 - 🕳: [Bond_calculator](https://codexboru.github.io/bond/index.html)  
 - 🕹️: [README.md](https://codexboru.github.io/bond/README.html)
+- 📊: [stats](https://codexboru.github.io/bond/stats.html)
 ---
 
 ## 🕹️ Einleitung
