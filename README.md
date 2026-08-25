@@ -1,6 +1,5 @@
-## Lizenz
-Dieses Projekt steht unter der MIT-Lizenz.  
-Siehe die Datei [LICENSE](LICENSE) für Details.
+## 📜 [Lizenz](LICENSE)
+Dieses Projekt steht unter der MIT-Lizenz. 
 
 
 
