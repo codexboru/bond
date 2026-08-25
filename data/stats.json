@@ -1,0 +1,16 @@
+[
+  {
+    "land": "TR",
+    "monat": "08",
+    "jahr": "2026",
+    "leitzins": 50.00,
+    "bond_kaufkurs": 92.50
+  },
+  {
+    "land": "USA",
+    "monat": "08",
+    "jahr": "2026",
+    "leitzins": 5.25,
+    "bond_kaufkurs": 98.20
+  }
+]
