@@ -192,7 +192,7 @@
   fetch('data/money.json')
     .then(response => response.json())
     .then(data => {
-      const table = document.getElementById('m2m3Table'); // statt moneyTable
+      const table = document.getElementById('m2m3Table'); // richtige ID
       data.forEach(entry => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -208,6 +208,6 @@
       });
     })
     .catch(err => console.error('Fehler beim Laden money.json:', err));
-                </script>
+</script>
 </body>
 </html>
