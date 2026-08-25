@@ -66,3 +66,26 @@ M2/M3 ↑ → Zins ↑ → Bond ↓
 M2/M3 ↓ → Zins ↓ → Bond ↑
 - 📈 Dabei gibts dann bei Staatsanleihen steigende Kurse für Ankauf / Verkauf.
   Bond, Aktien High risk Assets.
+  
+---
+
+## 📂 Data Download / Upload
+
+Die Anwendung unterstützt den Export und Import von JSON‑Dateien als Datenbank‑Referenzpunkte:
+
+- **money.json**  
+  [➡ Direktlink zur Datei](https://github.com/codexboru/bond/blob/main/data/money.json)  
+  Enthält die M2/M3‑Aggregatwerte, Status und Zinserwartungen.  
+  → Download: erzeugt eine JSON‑Datei aus den aktuellen Tabellenwerten.  
+  → Upload: lädt eine bestehende `money.json` und injiziert die Daten in die Tabelle.
+
+- **stats.json**  
+  [➡ Direktlink zur Datei](https://github.com/codexboru/bond/blob/main/data/stats.json)  
+  Enthält Leitzinsen und Bond‑Kurse der wichtigsten Länder.  
+  → Download: exportiert die Tabelle als `stats.json`.  
+  → Upload: liest eine bestehende Datei ein und ergänzt die Tabelle ohne Duplikate.
+
+### 🔑 Referenzpunkte
+- **Download** = Sicherung der aktuellen Datenbankstände  
+- **Upload** = Wiederherstellung oder Austausch von Datenquellen  
+- **Duplikationsprüfung** = verhindert doppelte Einträge beim erneuten Laden
