@@ -1,3 +1,9 @@
+## Lizenz
+Dieses Projekt steht unter der MIT-Lizenz.  
+Siehe die Datei [LICENSE](LICENSE) für Details.
+
+
+
 # Bond Calculator – Codexboru Edition 🎮
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
