@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>M2/M3 Übersicht</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #111;
+      color: #eee;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+    }
+    .green { background-color: #2e7d32; }
+    .yellow { background-color: #f9a825; }
+    .red { background-color: #c62828; }
+    button {
+      margin: 10px;
+      padding: 8px 12px;
+      background-color: #444;
+      color: #eee;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>M2/M3 Geldmengen – Übersicht</h1>
+  <table id="m2m3Table">
+    <tr>
+      <th>Datum</th>
+      <th>Land</th>
+      <th>M2</th>
+      <th>M3</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>Juli 2026</td>
+      <td>USA</td>
+      <td>23.003 Mrd. USD</td>
+      <td>≈23.5 Tsd. Mrd. USD</td>
+      <td class="red">Überhitzung</td>
+    </tr>
+    <tr>
+      <td>Juli 2026</td>
+      <td>Eurozone</td>
+      <td>16.411 Mrd. EUR</td>
+      <td>17.611 Mrd. EUR</td>
+      <td class="yellow">Stagnation</td>
+    </tr>
+    <tr>
+      <td>Juli 2026</td>
+      <td>Türkei</td>
+      <td>28,14 Bio. TRY</td>
+      <td>30,98 Bio. TRY</td>
+      <td class="red">Inflationsdruck</td>
+    </tr>
+    <tr>
+      <td>Juli 2026</td>
+      <td>Japan</td>
+      <td>12.970.074 Mrd. JPY</td>
+      <td>+1,4 % YoY</td>
+      <td class="green">Niedrige Umlaufgeschwindigkeit</td>
+    </tr>
+  </table>
+
+  <button onclick="downloadJSON()">Download JSON</button>
+  <input type="file" id="uploadJSON" accept=".json" onchange="uploadJSON(event)">
+  
+  <script>
+    function downloadJSON() {
+      const table = document.getElementById("m2m3Table");
+      const rows = table.querySelectorAll("tr");
+      const data = [];
+      rows.forEach((row, index) => {
+        if (index === 0) return; // skip header
+        const cells = row.querySelectorAll("td");
+        if (cells.length > 0) {
+          data.push({
+            datum: cells[0].innerText,
+            land: cells[1].innerText,
+            M2: cells[2].innerText,
+            M3: cells[3].innerText,
+            status: cells[4].innerText
+          });
+        }
+      });
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "m2m3.json";
+      link.click();
+    }
+
+    function uploadJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = JSON.parse(e.target.result);
+        const table = document.getElementById("m2m3Table");
+        // remove old rows
+        table.querySelectorAll("tr:not(:first-child)").forEach(r => r.remove());
+        // add new rows
+        data.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.datum}</td>
+            <td>${item.land}</td>
+            <td>${item.M2}</td>
+            <td>${item.M3}</td>
+            <td>${item.status}</td>
+          `;
+          table.appendChild(row);
+        });
+      };
+      reader.readAsText(file);
+    }
+  </script>
+</body>
+</html>
