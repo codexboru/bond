@@ -39,14 +39,18 @@ Trotzdem wird am Ende der Laufzeit der **Nominalwert von 100 %** ausgezahlt �
 
 ---
 
-## 📊 Leitzins mit dem Kaufkurs der Staatsanleihen
+## 📊 [Leitzins mit dem Kaufkurs der Staatsanleihen](https://codexboru.github.io/bond/stats.html)
 - Datenbank von Leitzins und Anleihe Kaufkurse.
 
 ---
 
-## 🐈 M2 / M3 Geldmenge
+## 🐈 [M2 / M3 Geldmenge](https://codexboru.github.io/bond/money.html)
+
+M2/M3 ↑ → Zins ↑ → Bond ↓
 - Wenn die zirkulierende Geldmenge in den Ländern steigt, dann wird die Zentralbank die Zinsen anheben um die Umlaufgeschwindigkeit zu reduzieren.
 -📉 Dabei gibts dann bei Staatsanleihen fallende Kurse.
 - Wenn die Zirkulierende Geldmenge in den Ländern sinkt, dann wird die Zentralbank die Zinsen senken.
+  
+M2/M3 ↓ → Zins ↓ → Bond ↑
 - 📈 Dabei gibts dann bei Staatsanleihen steigende Kurse für Ankauf / Verkauf.
   Bond, Aktien High risk Assets.
