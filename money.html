@@ -1,82 +1,135 @@
-[
-  {
-    "date": "2000-03-10",
-    "land": "USA",
-    "M2": "4.7 Bio. USD",
-    "M3": "6.5 Bio. USD",
-    "status": "Dotcom-Blase Höhepunkt",
-    "zinserwartung": "Neutral"
-  },
-  {
-    "date": "2001-02-21",
-    "land": "TR",
-    "M2": "37 Mrd. USD (äquivalent TRY)",
-    "M3": "42 Mrd. USD (äquivalent TRY)",
-    "status": "Türkei Bankenkrise",
-    "zinserwartung": "Erhöhung"
-  },
-  {
-    "date": "2008-09-15",
-    "land": "USA",
-    "M2": "7.5 Bio. USD",
-    "M3": "10.5 Bio. USD",
-    "status": "Lehman Brothers Pleite",
-    "zinserwartung": "Reduzierung"
-  },
-  {
-    "date": "2010-05-01",
-    "land": "EU",
-    "M2": "9 Bio. EUR",
-    "M3": "12 Bio. EUR",
-    "status": "Eurokrise",
-    "zinserwartung": "Halten"
-  },
-  {
-    "date": "2018-08-15",
-    "land": "TR",
-    "M2": "1,5 Bio. TRY",
-    "M3": "1,8 Bio. TRY",
-    "status": "Lira-Krise",
-    "zinserwartung": "Erhöhung"
-  },
-  {
-    "date": "2020-03-15",
-    "land": "USA",
-    "M2": "15 Bio. USD",
-    "M3": null,
-    "status": "Corona-Crash",
-    "zinserwartung": "Neutral"
-  },
-  {
-    "date": "2026-07-01",
-    "land": "USA",
-    "M2": "23.003 Mrd. USD",
-    "M3": "≈23.5 Tsd. Mrd. USD",
-    "status": "Überhitzung",
-    "zinserwartung": "Erhöhung"
-  },
-  {
-    "date": "2026-07-01",
-    "land": "TR",
-    "M2": "28,144,251,947 Tsd. TRY",
-    "M3": "30,981,744,199 Tsd. TRY",
-    "status": "Neutral",
-    "zinserwartung": "Halten"
-  },
-  {
-    "date": "2026-07-01",
-    "land": "JPY",
-    "M2": "1,641.2 Bio. JPY",
-    "M3": "1,637.2 Bio. JPY",
-    "status": "Niedrig",
-    "zinserwartung": "Reduzierung"
-  },
-  {
-    "date": "2026-07-01",
-    "land": "EZB",
-    "M2": "16,411 Mrd. EUR",
-    "M3": "17,611 Mrd. EUR",
-    "status": "Niedrig",
-    "zinserwartung": "Reduzierung"
-  }
-]
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>M2/M3 Geldmengen – Übersicht</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #00ff00;
+      padding: 6px;
+      text-align: left;
+    }
+    input, select, button {
+      background-color: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      font-family: monospace;
+      margin: 4px;
+    }
+    .btn {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>M2/M3 Geldmengen – Übersicht</h1>
+
+  <!-- Eingabeformular -->
+  <form id="entryForm">
+    <label>Datum: <input type="date" id="date"></label>
+    <label>Land: <input type="text" id="land"></label>
+    <label>M2: <input type="text" id="m2"></label>
+    <label>M3: <input type="text" id="m3"></label>
+    <label>Status: <input type="text" id="status"></label>
+    <label>Zinserwartung: <input type="text" id="zinserwartung"></label>
+    <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
+    <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
+    <input type="file" id="uploadFile" onchange="uploadJSON()" />
+  </form>
+
+  <!-- Tabelle -->
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Land</th>
+        <th>M2</th>
+        <th>M3</th>
+        <th>Status</th>
+        <th>Zinserwartung</th>
+        <th>Löschen</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script>
+    let data = [
+      {"date":"2000-03-10","land":"USA","M2":"4.7 Bio. USD","M3":"6.5 Bio. USD","status":"Dotcom-Blase Höhepunkt","zinserwartung":"Neutral"},
+      {"date":"2001-02-21","land":"TR","M2":"37 Mrd. USD (äquivalent TRY)","M3":"42 Mrd. USD (äquivalent TRY)","status":"Türkei Bankenkrise","zinserwartung":"Erhöhung"},
+      {"date":"2008-09-15","land":"USA","M2":"7.5 Bio. USD","M3":"10.5 Bio. USD","status":"Lehman Brothers Pleite","zinserwartung":"Reduzierung"},
+      {"date":"2010-05-01","land":"EU","M2":"9 Bio. EUR","M3":"12 Bio. EUR","status":"Eurokrise","zinserwartung":"Halten"},
+      {"date":"2018-08-15","land":"TR","M2":"1,5 Bio. TRY","M3":"1,8 Bio. TRY","status":"Lira-Krise","zinserwartung":"Erhöhung"},
+      {"date":"2020-03-15","land":"USA","M2":"15 Bio. USD","M3":null,"status":"Corona-Crash","zinserwartung":"Neutral"},
+      {"date":"2026-07-01","land":"USA","M2":"23.003 Mrd. USD","M3":"≈23.5 Tsd. Mrd. USD","status":"Überhitzung","zinserwartung":"Erhöhung"},
+      {"date":"2026-07-01","land":"TR","M2":"28,144,251,947 Tsd. TRY","M3":"30,981,744,199 Tsd. TRY","status":"Neutral","zinserwartung":"Halten"},
+      {"date":"2026-07-01","land":"JPY","M2":"1,641.2 Bio. JPY","M3":"1,637.2 Bio. JPY","status":"Niedrig","zinserwartung":"Reduzierung"},
+      {"date":"2026-07-01","land":"EZB","M2":"16,411 Mrd. EUR","M3":"17,611 Mrd. EUR","status":"Niedrig","zinserwartung":"Reduzierung"}
+    ];
+
+    function renderTable() {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+      data.forEach((entry, index) => {
+        const row = document.createElement("tr");
+        Object.values(entry).forEach(val => {
+          const cell = document.createElement("td");
+          cell.textContent = val;
+          row.appendChild(cell);
+        });
+        const delCell = document.createElement("td");
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "X";
+        delBtn.onclick = () => { data.splice(index,1); renderTable(); };
+        delCell.appendChild(delBtn);
+        row.appendChild(delCell);
+        tbody.appendChild(row);
+      });
+    }
+
+    function addEntry() {
+      const newEntry = {
+        date: document.getElementById("date").value,
+        land: document.getElementById("land").value,
+        M2: document.getElementById("m2").value,
+        M3: document.getElementById("m3").value,
+        status: document.getElementById("status").value,
+        zinserwartung: document.getElementById("zinserwartung").value
+      };
+      data.push(newEntry);
+      renderTable();
+    }
+
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "money.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function uploadJSON() {
+      const file = document.getElementById("uploadFile").files[0];
+      const reader = new FileReader();
+      reader.onload = e => {
+        data = JSON.parse(e.target.result);
+        renderTable();
+      };
+      reader.readAsText(file);
+    }
+
+    renderTable();
+  </script>
+</body>
+      </html>
