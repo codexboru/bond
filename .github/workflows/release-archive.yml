@@ -17,8 +17,8 @@ jobs:
 
       - name: Validate JSON
         run: |
-          jq . money.json
-          jq . stats.json
+          jq . data/money.json
+          jq . data/stats.json
 
       - name: Create Release Archive
         run: |
