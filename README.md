@@ -11,6 +11,7 @@
 - 🕳: [Bond_calculator](https://codexboru.github.io/bond/index.html)  
 - 🕹️: [README.md](https://codexboru.github.io/bond/README.html)
 - 📊: [stats](https://codexboru.github.io/bond/stats.html)
+- 🐈: [M2/M3](https://codexboru.github.io/bond/money.html)
 ---
 
 ## 🕹️ Einleitung
