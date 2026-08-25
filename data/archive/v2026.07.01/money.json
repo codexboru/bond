@@ -1,0 +1,79 @@
+[
+  {
+    "date": "2000-03-10",
+    "land": "USA",
+    "m2": 4700,
+    "m3": 6800,
+    "status": "Dotcom-Blase (Überhitzt)"
+  },
+  {
+    "date": "2001-02-21",
+    "land": "TR",
+    "m2": 120,
+    "m3": 180,
+    "status": "Türkei Bankenkrise (Crash)"
+  },
+  {
+    "date": "2008-09-15",
+    "land": "USA",
+    "m2": 7500,
+    "m3": 10500,
+    "status": "Lehman Brothers Pleite (Finanzkrise)"
+  },
+  {
+    "date": "2010-05-01",
+    "land": "EU",
+    "m2": 8900,
+    "m3": 12500,
+    "status": "Eurokrise (Schuldenkrise)"
+  },
+  {
+    "date": "2018-08-15",
+    "land": "TR",
+    "m2": 950,
+    "m3": 1400,
+    "status": "Lira-Krise (Währungskrise)"
+  },
+  {
+    "date": "2020-03-15",
+    "land": "USA",
+    "m2": 15500,
+    "m3": 21000,
+    "status": "Corona-Crash (Pandemie-Schock)"
+  },
+  {
+    "date": "2026-08-25",
+    "land": "TRY",
+    "m2": 2200,
+    "m3": 3100,
+    "status": "Überhitzt"
+  },
+  {
+    "date": "2026-08-25",
+    "land": "USA",
+    "m2": 19000,
+    "m3": 26000,
+    "status": "Halten"
+  },
+  {
+    "date": "2026-08-25",
+    "land": "ENG",
+    "m2": 3200,
+    "m3": 4700,
+    "status": "Reduziert"
+  },
+  {
+    "date": "2026-08-25",
+    "land": "JPY",
+    "m2": 1200,
+    "m3": 1800,
+    "status": "Stabil"
+  },
+  {
+    "date": "2026-08-25",
+    "land": "EZB",
+    "m2": 9800,
+    "m3": 13500,
+    "status": "Neutral"
+  }
+]
