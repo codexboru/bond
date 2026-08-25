@@ -1,0 +1,28 @@
+name: Release Archive
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'   # reagiert auf Tags wie v1.0.0, v1.1.0 usw.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create Archives
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          zip -r bond-${VERSION}.zip .
+          tar -czf bond-${VERSION}.tar.gz .
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            bond-${VERSION}.zip
+            bond-${VERSION}.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
