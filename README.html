@@ -24,6 +24,13 @@
       border: 1px solid #555;
       margin: 20px 0;
     }
+    pre {
+      background-color: #222;
+      color: #0f0;
+      padding: 10px;
+      border: 1px solid #555;
+      overflow-x: auto;
+    }
   </style>
 </head>
 <body>
@@ -131,5 +138,26 @@
     <li><strong>Duplikationsprüfung</strong> = verhindert doppelte Einträge beim erneuten Laden</li>
   </ul>
 
+  <hr>
+
+  <h2>🖼 ASCII Diagramm</h2>
+  <pre>
+   ┌───────────────┐        ┌───────────────┐
+   │   money.html  │ <----> │  money.json   │
+   └───────────────┘        └───────────────┘
+           │                        │
+           │                        │
+           ▼                        ▼
+   ┌───────────────┐        ┌───────────────┐
+   │   stats.html  │ <----> │  stats.json   │
+   └───────────────┘        └───────────────┘
+           │
+           ▼
+   ┌───────────────────────────┐
+   │        README.html        │
+   │   Dokumentation & Links   │
+   └───────────────────────────┘
+  </pre>
+
 </body>
-                                                            </html>
+</html>
