@@ -1,16 +1,34 @@
 [
   {
-    "land": "TR",
-    "monat": "08",
-    "jahr": "2026",
-    "M2": 123456,
-    "M3": 234567
+    "datum": "Juli 2026",
+    "land": "USA",
+    "M2": "23.003 Mrd. USD",
+    "M3": "≈23.5 Tsd. Mrd. USD",
+    "status": "Überhitzung",
+    "zinserwartung": "Erhöhung"
   },
   {
-    "land": "USA",
-    "monat": "08",
-    "jahr": "2026",
-    "M2": 987654,
-    "M3": 1234567
+    "datum": "Juli 2026",
+    "land": "TR",
+    "M2": "28,144,251,947 Tsd. TRY",
+    "M3": "30,981,744,199 Tsd. TRY",
+    "status": "Neutral",
+    "zinserwartung": "Halten"
+  },
+  {
+    "datum": "Juli 2026",
+    "land": "JPY",
+    "M2": "1,641.2 Bio. JPY",
+    "M3": "1,637.2 Bio. JPY",
+    "status": "Niedrig",
+    "zinserwartung": "Reduzierung"
+  },
+  {
+    "datum": "Juli 2026",
+    "land": "EZB",
+    "M2": "16,411 Mrd. EUR",
+    "M3": "17,611 Mrd. EUR",
+    "status": "Niedrig",
+    "zinserwartung": "Reduzierung"
   }
 ]
