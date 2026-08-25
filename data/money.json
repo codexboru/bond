@@ -2,81 +2,78 @@
   {
     "date": "2000-03-10",
     "land": "USA",
-    "M2": "4.7 Bio. USD",
-    "M3": "6.5 Bio. USD",
-    "status": "Dotcom-Blase Höhepunkt",
-    "zinserwartung": "Neutral"
+    "m2": 4700,
+    "m3": 6800,
+    "status": "Dotcom-Blase (Überhitzt)"
   },
   {
     "date": "2001-02-21",
     "land": "TR",
-    "M2": "37 Mrd. USD (äquivalent TRY)",
-    "M3": "42 Mrd. USD (äquivalent TRY)",
-    "status": "Türkei Bankenkrise",
-    "zinserwartung": "Erhöhung"
+    "m2": 120,
+    "m3": 180,
+    "status": "Türkei Bankenkrise (Crash)"
   },
   {
     "date": "2008-09-15",
     "land": "USA",
-    "M2": "7.5 Bio. USD",
-    "M3": "10.5 Bio. USD",
-    "status": "Lehman Brothers Pleite",
-    "zinserwartung": "Reduzierung"
+    "m2": 7500,
+    "m3": 10500,
+    "status": "Lehman Brothers Pleite (Finanzkrise)"
   },
   {
     "date": "2010-05-01",
     "land": "EU",
-    "M2": "9 Bio. EUR",
-    "M3": "12 Bio. EUR",
-    "status": "Eurokrise",
-    "zinserwartung": "Halten"
+    "m2": 8900,
+    "m3": 12500,
+    "status": "Eurokrise (Schuldenkrise)"
   },
   {
     "date": "2018-08-15",
     "land": "TR",
-    "M2": "1,5 Bio. TRY",
-    "M3": "1,8 Bio. TRY",
-    "status": "Lira-Krise",
-    "zinserwartung": "Erhöhung"
+    "m2": 950,
+    "m3": 1400,
+    "status": "Lira-Krise (Währungskrise)"
   },
   {
     "date": "2020-03-15",
     "land": "USA",
-    "M2": "15 Bio. USD",
-    "M3": null,
-    "status": "Corona-Crash",
-    "zinserwartung": "Neutral"
+    "m2": 15500,
+    "m3": 21000,
+    "status": "Corona-Crash (Pandemie-Schock)"
   },
   {
-    "date": "2026-07-01",
+    "date": "2026-08-25",
+    "land": "TRY",
+    "m2": 2200,
+    "m3": 3100,
+    "status": "Überhitzt"
+  },
+  {
+    "date": "2026-08-25",
     "land": "USA",
-    "M2": "23.003 Mrd. USD",
-    "M3": "≈23.5 Tsd. Mrd. USD",
-    "status": "Überhitzung",
-    "zinserwartung": "Erhöhung"
+    "m2": 19000,
+    "m3": 26000,
+    "status": "Halten"
   },
   {
-    "date": "2026-07-01",
-    "land": "TR",
-    "M2": "28,144,251,947 Tsd. TRY",
-    "M3": "30,981,744,199 Tsd. TRY",
-    "status": "Neutral",
-    "zinserwartung": "Halten"
+    "date": "2026-08-25",
+    "land": "ENG",
+    "m2": 3200,
+    "m3": 4700,
+    "status": "Reduziert"
   },
   {
-    "date": "2026-07-01",
+    "date": "2026-08-25",
     "land": "JPY",
-    "M2": "1,641.2 Bio. JPY",
-    "M3": "1,637.2 Bio. JPY",
-    "status": "Niedrig",
-    "zinserwartung": "Reduzierung"
+    "m2": 1200,
+    "m3": 1800,
+    "status": "Stabil"
   },
   {
-    "date": "2026-07-01",
+    "date": "2026-08-25",
     "land": "EZB",
-    "M2": "16,411 Mrd. EUR",
-    "M3": "17,611 Mrd. EUR",
-    "status": "Niedrig",
-    "zinserwartung": "Reduzierung"
+    "m2": 9800,
+    "m3": 13500,
+    "status": "Neutral"
   }
 ]
