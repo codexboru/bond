@@ -4,71 +4,76 @@
     "land": "USA",
     "leitzins": 6.5,
     "bond_kaufkurs": 94.5,
-    "event": "Dotcom-Blase Höhepunkt"
+    "status": "Dotcom-Blase (Überhitzt)"
   },
   {
     "date": "2001-02-21",
     "land": "TR",
     "leitzins": 62.0,
     "bond_kaufkurs": 72.0,
-    "event": "Türkei Bankenkrise"
+    "status": "Türkei Bankenkrise (Crash)"
   },
   {
     "date": "2008-09-15",
     "land": "USA",
     "leitzins": 2.0,
     "bond_kaufkurs": 98.3,
-    "event": "Lehman Brothers Pleite"
+    "status": "Lehman Brothers Pleite (Finanzkrise)"
   },
   {
     "date": "2010-05-01",
     "land": "EU",
     "leitzins": 1.0,
     "bond_kaufkurs": 99.1,
-    "event": "Eurokrise"
+    "status": "Eurokrise (Schuldenkrise)"
   },
   {
     "date": "2018-08-15",
     "land": "TR",
     "leitzins": 17.75,
     "bond_kaufkurs": 85.0,
-    "event": "Lira-Krise"
+    "status": "Lira-Krise (Währungskrise)"
   },
   {
     "date": "2020-03-15",
     "land": "USA",
     "leitzins": 0.25,
     "bond_kaufkurs": 99.8,
-    "event": "Corona-Crash"
+    "status": "Corona-Crash (Pandemie-Schock)"
   },
   {
     "date": "2026-08-25",
     "land": "TRY",
     "leitzins": 37,
-    "bond_kaufkurs": 86.24
+    "bond_kaufkurs": 86.24,
+    "status": "Überhitzt"
   },
   {
     "date": "2026-08-25",
     "land": "USA",
     "leitzins": 3.63,
-    "bond_kaufkurs": 98.5
+    "bond_kaufkurs": 98.5,
+    "status": "Halten"
   },
   {
     "date": "2026-08-25",
     "land": "ENG",
     "leitzins": 4,
-    "bond_kaufkurs": 96
+    "bond_kaufkurs": 96,
+    "status": "Reduziert"
   },
   {
     "date": "2026-08-25",
     "land": "JPY",
     "leitzins": 0.5,
-    "bond_kaufkurs": 99
+    "bond_kaufkurs": 99,
+    "status": "Stabil"
   },
   {
     "date": "2026-08-25",
     "land": "EZB",
     "leitzins": 2.4,
-    "bond_kaufkurs": 97.4
+    "bond_kaufkurs": 97.4,
+    "status": "Neutral"
   }
 ]
