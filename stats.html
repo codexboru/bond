@@ -44,8 +44,8 @@
         rows.push({
           date: cells[0].innerText,
           land: cells[1].innerText,
-          leitzins: cells[2].innerText,
-          bond: cells[3].innerText
+          leitzins: cells[2].innerText.replace(" %",""), // nur Zahl speichern
+          bond: cells[3].innerText.replace(" %","")      // nur Zahl speichern
         });
       }
       localStorage.setItem("matrixData", JSON.stringify(rows));
@@ -63,8 +63,8 @@
       const row = table.insertRow();
       row.insertCell(0).innerText = date;
       row.insertCell(1).innerText = land;
-      row.insertCell(2).innerText = leitzins + " %";
-      row.insertCell(3).innerText = bond + " %";
+      row.insertCell(2).innerText = leitzins + " %";   // Anzeige mit %
+      row.insertCell(3).innerText = bond + " %";       // Anzeige mit %
       const deleteCell = row.insertCell(4);
       const btn = document.createElement("button");
       btn.innerText = "Löschen";
@@ -104,7 +104,7 @@
       reader.onload = function(e) {
         const rows = JSON.parse(e.target.result);
         table.innerHTML = "<tr><th onclick='sortTable(1)'>Land</th><th>Datum</th><th>Leitzins</th><th>1J Staatsanleihe</th><th>Aktion</th></tr>";
-        rows.forEach(r => addRow(r.date, r.land, r.leitzins, r.bond));
+        rows.forEach(r => addRow(r.date, r.land, r.leitzins, r.bond)); // hier wieder % anhängen
         saveLocal();
       };
       reader.readAsText(file);
