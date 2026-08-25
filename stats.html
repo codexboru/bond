@@ -57,8 +57,9 @@
     <a href="stats.html">📊 Stats</a>
     <a href="#" onclick="downloadJSON()">💾 Download</a>
     <label for="uploadFile" style="cursor:pointer;">Upload</label>
-    <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
-  </div>
+     <input type="file" id="uploadFile" accept=".json,application/json" onchange="uploadJSON()" style="display:none;" />
+</div>
+  
 
   <!-- Eingabeformular -->
   <form id="entryForm">
