@@ -39,6 +39,13 @@ Trotzdem wird am Ende der Laufzeit der **Nominalwert von 100 %** ausgezahlt �
 
 ---
 
+## 🕳 [bond_calculator](https://codexboru.github.io/bond/index.html)
+- Türkische Staatsanleihe Kaufkurs und Nominal Verkaufskurs kalkulator.
+- Mit Gewinn bei Nominalwert 100 nach Ablauf Datum Rechner, sowie Investierte Summe mit Kauf Datum.
+- Mit dem dazugehörigen Ticker der Anleihe.
+
+---
+
 ## 📊 [Leitzins mit dem Kaufkurs der Staatsanleihen](https://codexboru.github.io/bond/stats.html)
 - Datenbank von Leitzins und Anleihe Kaufkurse.
 
