@@ -27,11 +27,35 @@
     }
     .btn {
       cursor: pointer;
+      padding: 6px 12px;
+      margin: 2px;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .nav button {
+      border: 1px solid #00ff00;
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
   <h1>Zinsen & Staatsanleihen – Übersicht</h1>
+
+  <!-- Navigation Buttons -->
+  <div class="nav">
+    <button>☀️🌙</button>
+    <button>Codexboru</button>
+    <button>README.md</button>
+    <button>M2/M3</button>
+    <button>Stats</button>
+    <button onclick="downloadJSON()">Download</button>
+    <input type="file" id="uploadFile" onchange="uploadJSON()" />
+  </div>
 
   <!-- Eingabeformular -->
   <form id="entryForm">
@@ -41,8 +65,6 @@
     <label>Kaufkurs (1J): <input type="text" id="bond_kaufkurs"></label>
     <label>Status/Event: <input type="text" id="status"></label>
     <button type="button" class="btn" onclick="addEntry()">Eintrag hinzufügen</button>
-    <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
-    <input type="file" id="uploadFile" onchange="uploadJSON()" />
   </form>
 
   <!-- Tabelle -->
