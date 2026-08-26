@@ -1,6 +1,8 @@
 ## 📜 [Lizenz](https://codexboru.github.io/bond/LICENSE.html)
 Dieses Projekt steht unter der MIT-Lizenz. 
 
+[![Terminal_EXE](https://img.shields.io/badge/Terminal-EXE-darkblue)](https://codexboru.github.io/bond/EXE.html)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-v2026.07.01-blue.svg)](https://github.com/codexboru/bond/releases)
 [![View Demo](https://img.shields.io/badge/View-Demo-blue.svg)](https://codexboru.github.io/bond/index.html)
