@@ -37,6 +37,42 @@ It represents an **alternative to the Bloomberg Terminal**, tailored to personal
 
 Thus emerges a **continuous, historicized protocol of monetary policy** – a personal codex fulfilling the same function as a Bloomberg Terminal, but **free, controlled, and resonant**. 
 
+---
+
+### Jenseits von Finanzprodukten und News‑Bullshit – nur die wahren Steuergrößen zählen
+
+### Beyond financial products and news noise – only the true steering variables matter
+
+## Codex‑Fragment: Frei von Derivate‑Illusionen
+
+Dieses Projekt verzichtet bewusst auf die Darstellung von Banken‑Derivaten, Orderbooks, Matching‑Engines und den endlosen Strom an Finanzprodukten und News‑Bullshit.  
+All das ist nichts als **Sand in die Augen streuen** – ein Theater für Insider, das die eigentliche Steuerung verschleiert.  
+
+Die Wahrheit liegt in den **Rohdaten**:  
+- **M2/M3 Geldmengen** sind die fundamentalen Ströme, die Märkte wirklich bewegen.  
+- **Zinssitzungen** sind die Signale, die Liquidität lenken.  
+- **Status‑Events** dokumentieren die Wendepunkte.  
+
+Alles andere – Derivate, Produkte, Schlagzeilen – ist Überbau.  
+Der Codex konzentriert sich auf die **wahren Steuergrößen** und schafft ein Archiv, das frei, transparent und würdig bleibt.
+
+---
+
+## Codex Fragment: Free from Derivative Illusions
+
+This project deliberately excludes banks’ derivatives, orderbooks, matching engines, and the endless stream of financial products and news noise.  
+All of that is nothing but **sand thrown into the eyes** – a theater for insiders, masking the true levers of control.  
+
+The truth lies in the **raw data**:  
+- **M2/M3 monetary aggregates** are the fundamental flows that truly move markets.  
+- **Rate meetings** are the signals that steer liquidity.  
+- **Status events** mark the turning points.  
+
+Everything else – derivatives, products, headlines – is superstructure.  
+The Codex focuses on the **real steering variables**, building an archive that remains free, transparent, and dignified.
+
+
+
 ## 📌 Navigation
 - 😶‍🌫️: [Codexboru](https://github.com/codexboru/)  
 - 🕳: [Bond_calculator](https://codexboru.github.io/bond/index.html)  
