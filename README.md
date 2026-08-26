@@ -156,3 +156,41 @@ Die Anwendung unterstützt den Export und Import von JSON‑Dateien als Datenban
 - **Download** = Sicherung der aktuellen Datenbankstände  
 - **Upload** = Wiederherstellung oder Austausch von Datenquellen  
 - **Duplikationsprüfung** = verhindert doppelte Einträge beim erneuten Laden
+
+
+
+---
+
+## 🎬 Inflation und Zinspolitik
+
+Hohe Inflation zwingt die Zentralbank fast immer zu Zinserhöhungen.  
+Das Ziel ist, die Geldmenge zu bremsen und die Kaufkraft zu stabilisieren.  
+
+- **Inflation ↑ → Zinsen ↑ → Bonds ↓**  
+  Alte Anleihen verlieren an Attraktivität, Kapital fließt in neue Anleihen mit höherem Kupon. Risiko‑Assets wie Aktien fallen.  
+
+- **Inflation ↓ → Zinsen ↓ → Bonds ↑**  
+  Alte Anleihen mit hohem Kupon steigen im Wert, Verkaufspreise steigen, Risiko‑Assets gewinnen.  
+
+---
+
+## 🎯 Politischer Hintergrund
+
+Inflationszahlen sind kein neutrales Abbild der Realität, sondern ein politisch gefiltertes Signal.  
+Die Methodik (Warenkorb, Gewichtung, hedonische Anpassung, Substitution) wird genutzt, um die Statistik zu „glätten“.  
+
+- **Staatsfinanzen**: Niedrigere offizielle Werte bedeuten geringere Renten‑ und Lohnanpassungen.  
+- **Zinspolitik**: Zentralbanken orientieren sich am offiziellen Index.  
+- **Schuldenlast**: Niedrigere Inflation lässt Staatsschulden tragbarer erscheinen.  
+- **Narrativ**: Bürger sollen Stabilität wahrnehmen, auch wenn die reale Kaufkraft sinkt.  
+
+---
+
+## ⚖️ Zentralbank ↔ Politik
+
+Die Zentralbank schützt die Politik, sofern die Politik ihre Linie mitträgt.  
+- **Zentralbank** liefert Kontrolle durch Zinsschocks und Stabilisierung.  
+- **Politik** liefert das Narrativ von Stabilität und verkauft es als Erfolg.  
+Nur wenn beide synchron laufen, entsteht Schutz und Vertrauen.  
+
+👉 Kurz gesagt: **Zentralbank liefert die ökonomische Bühne – Politik inszeniert die Erzählung.**
