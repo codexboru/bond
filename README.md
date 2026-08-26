@@ -194,3 +194,32 @@ Die Zentralbank schützt die Politik, sofern die Politik ihre Linie mitträgt.
 Nur wenn beide synchron laufen, entsteht Schutz und Vertrauen.  
 
 👉 Kurz gesagt: **Zentralbank liefert die ökonomische Bühne – Politik inszeniert die Erzählung.**
+
+
+---
+
+## 📡 Signal des Zinsschocks
+
+Zentralbanken bereiten Märkte nicht mit Panik, sondern mit **Codewörtern** und kleinen Schritten auf den Zinsschock vor.  
+Diese Sprache ist Teil der *Forward Guidance* – ein kalkuliertes Signal für Profis.
+
+- **"graduelle Normalisierung"** → Hinweis, dass Zinsen Schritt für Schritt steigen werden.  
+- **"persistente Inflation"** → Signal, dass die Teuerung nicht von selbst zurückgeht und Maßnahmen folgen müssen.  
+- **"Inflationsdruck"** → Vorwarnung, dass Preissteigerungen stärker wirken als offiziell dargestellt.  
+- **"notwendige Anpassungen"** → Code für bevorstehende Zinsschritte.  
+- **"unter Kontrolle"** → Narrativ, das Panik vermeiden soll, obwohl die Richtung klar nach oben zeigt.  
+
+---
+
+## 📈 Wirkung
+
+- **Kommunikation**: Märkte werden frühzeitig konditioniert.  
+- **Kleine Schritte**: 0,25 %‑Erhöhungen als Vorboten.  
+- **Berichte**: Prognosen zeigen steigende Tendenz, aber mit beruhigender Sprache.  
+- **Marktreaktionen**: Pensionsfonds und Banken verkürzen Duration und bauen Liquiditätspuffer auf.  
+
+👉 Fazit: Die **Codewörter sind das Signal** – sie geben den Märkten Zeit, bevor der eigentliche Zinsschock kommt.
+
+Zeitspanne bis zum Zinsschock
+
+### 📢 Signal: 6-12 Monate bis zum Zinsschock und erhöhung massiv der Zinsen
