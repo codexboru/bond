@@ -9,7 +9,7 @@ Dieses Projekt steht unter der MIT-Lizenz.
 
 [![Total Downloads](https://img.shields.io/github/downloads/codexboru/bond/total?color=purple)](https://github.com/codexboru/bond/releases)
 
-[![Archiv 2026.08.01](https://img.shields.io/badge/Archiv-2026.08.01-blue)](dataarchive/v2026.08.01/)
+[![Archiv 2026.08.01](https://img.shields.io/badge/Archiv-2026.08.01-blue)](data/archive/v2026.08.01/)
 [![Archiv 2026.07.01](https://img.shields.io/badge/Archiv-2026.07.01-green)](data/archive/v2026.07.01/)
 
 # 🎮 Codex‑Fragment: Alternative zum Bloomberg Terminal
