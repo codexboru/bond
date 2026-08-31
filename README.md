@@ -16,6 +16,9 @@ Dieses Projekt steht unter der MIT-Lizenz.
 [![Archiv 2026.08.01](https://img.shields.io/badge/Archiv-2026.08.01-blue)](data/archive/v2026.08.01/)
 [![Archiv 2026.07.01](https://img.shields.io/badge/Archiv-2026.07.01-green)](data/archive/v2026.07.01/)
 
+
+![Definition](bilder/README.PNG)
+
 # 🎮 Codex‑Fragment: Alternative zum Bloomberg Terminal
 
 Dieses Projekt versteht sich als **freie, transparente Instanz** zur Dokumentation von Geldpolitik und Zentralbankentscheidungen.  
