@@ -4,43 +4,61 @@
   <meta charset="UTF-8">
   <title>Wallet Assets</title>
   <style>
-    body { font-family: Arial, sans-serif; }
+    body {
+      font-family: "Press Start 2P", monospace; /* 8-Bit Font */
+      background-color: #111;
+      color: #0f0;
+      text-shadow: 2px 2px #000;
+    }
     #popup, #popupAmount {
       display: none;
       position: fixed;
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #f0f0f0;
+      background: #222;
       padding: 20px;
-      border: 2px solid #333;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      border: 3px solid #0f0;
+      box-shadow: 0 0 10px #0f0;
     }
     #overlay {
       display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,255,0,0.2);
     }
-    button { margin: 5px; }
+    button {
+      margin: 5px;
+      background: #000;
+      color: #0f0;
+      border: 2px solid #0f0;
+      font-family: "Press Start 2P", monospace;
+      cursor: pointer;
+    }
     .entry { margin: 5px 0; }
     .deleteBtn { margin-left: 10px; color: red; }
     .topbar { margin-bottom: 15px; }
     #total { font-weight: bold; margin-top: 15px; }
+    #status {
+      margin-top: 10px;
+      color: #ff0;
+      font-size: 12px;
+    }
   </style>
+  <!-- Google Fonts für 8-Bit Schrift -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="topbar">
-    <h2 style="display:inline;">Wallet Assets</h2>
+    <h2 style="display:inline;">WALLET ASSETS</h2>
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
-    <!-- accept="*/*" zwingt Android, den Dateimanager zu öffnen -->
     <input type="file" id="uploadFile" accept="application/*" onchange="uploadJSON()" style="display:none;" />
   </div>
 
-  <button onclick="openPopup()">Asset hinzufügen</button>
+  <button onclick="openPopup()">+ Asset hinzufügen</button>
 
   <div>
     <label for="filterDate">Filter nach Datum:</label>
@@ -51,6 +69,7 @@
 
   <div id="entries"></div>
   <p id="total">Gesamtsumme: –</p>
+  <p id="status"></p>
 
   <!-- Overlay -->
   <div id="overlay"></div>
@@ -59,8 +78,8 @@
   <div id="popup">
     <h3>Assets:</h3>
     <button onclick="selectOption('ASTER Krypto')">ASTER Token</button>
-    <button onclick="selectOption('Bond')">Türkische Staatsanleihe Bond</button>
-    <button onclick="selectOption('Zinseszins')">Tagesgeld Festgeld 21 Tage</button>
+    <button onclick="selectOption('Bond')">Bond</button>
+    <button onclick="selectOption('Zinseszins')">Zinseszins</button>
     <br><br>
     <button onclick="closePopup()">Schließen</button>
   </div>
@@ -76,7 +95,7 @@
 
   <script>
     let currentSelection = null;
-    let assets = []; // zentrale Datenstruktur
+    let assets = [];
 
     function openPopup() {
       document.getElementById('overlay').style.display = 'block';
@@ -107,6 +126,7 @@
         const entry = { type: currentSelection, amount: parseFloat(amount), date: today };
         assets.push(entry);
         renderEntries();
+        document.getElementById('status').textContent = ">> 1 Asset gespeichert!";
       }
       document.getElementById('amountInput').value = "";
       closePopupAmount();
@@ -134,6 +154,7 @@
     function deleteEntry(index) {
       assets.splice(index, 1);
       renderEntries();
+      document.getElementById('status').textContent = ">> Asset gelöscht!";
     }
 
     function downloadJSON() {
@@ -144,6 +165,7 @@
       a.download = "wallet.json";
       a.click();
       URL.revokeObjectURL(url);
+      document.getElementById('status').textContent = ">> Datei wallet.json gespeichert!";
     }
 
     function uploadJSON() {
@@ -154,6 +176,7 @@
         try {
           assets = JSON.parse(e.target.result);
           renderEntries();
+          document.getElementById('status').textContent = ">> " + assets.length + " Assets erfolgreich geladen!";
         } catch (err) {
           alert("Ungültige JSON-Datei!");
         }
@@ -167,13 +190,15 @@
         const formatted = new Date(filterDate).toLocaleDateString('de-DE');
         const filtered = assets.filter(inv => inv.date === formatted);
         renderEntries(filtered);
+        document.getElementById('status').textContent = ">> Filter angewendet!";
       }
     }
 
     function clearFilter() {
       renderEntries();
+      document.getElementById('status').textContent = ">> Filter zurückgesetzt!";
     }
   </script>
 
 </body>
-  </html>
+</html>
