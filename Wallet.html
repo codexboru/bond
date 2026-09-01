@@ -36,8 +36,8 @@
     <h2 style="display:inline;">Assets</h2>
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
-    <!-- accept="application/*" für mobile Dateiauswahl -->
-    <input type="file" id="uploadFile" accept="application/*" onchange="uploadJSON()" style="display:none;" />
+    <!-- Ohne accept-Filter für maximale Kompatibilität -->
+    <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
   </div>
 
   <button onclick="openPopup()">Asset auswählen</button>
@@ -175,4 +175,4 @@
   </script>
 
 </body>
-</html>
+  </html>
