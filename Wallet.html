@@ -36,8 +36,8 @@
     <h2 style="display:inline;">Wallet Assets</h2>
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
-    <!-- Ohne accept-Filter für maximale Kompatibilität -->
-    <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
+    <!-- accept="*/*" zwingt Android, den Dateimanager zu öffnen -->
+    <input type="file" id="uploadFile" accept="*/*" onchange="uploadJSON()" style="display:none;" />
   </div>
 
   <button onclick="openPopup()">Asset hinzufügen</button>
@@ -175,4 +175,4 @@
   </script>
 
 </body>
-    </html>
+</html>
