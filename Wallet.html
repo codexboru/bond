@@ -37,7 +37,7 @@
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
     <!-- accept="*/*" zwingt Android, den Dateimanager zu öffnen -->
-    <input type="file" id="uploadFile" accept="*/*" onchange="uploadJSON()" style="display:none;" />
+    <input type="file" id="uploadFile" accept="application/*" onchange="uploadJSON()" style="display:none;" />
   </div>
 
   <button onclick="openPopup()">Asset hinzufügen</button>
