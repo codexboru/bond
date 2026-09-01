@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Assets</title>
+  <title>Wallet Assets</title>
   <style>
     body { font-family: Arial, sans-serif; }
     #popup, #popupAmount {
@@ -33,14 +33,14 @@
 <body>
 
   <div class="topbar">
-    <h2 style="display:inline;">Assets</h2>
+    <h2 style="display:inline;">Wallet Assets</h2>
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
     <!-- Ohne accept-Filter für maximale Kompatibilität -->
     <input type="file" id="uploadFile" onchange="uploadJSON()" style="display:none;" />
   </div>
 
-  <button onclick="openPopup()">Asset auswählen</button>
+  <button onclick="openPopup()">Asset hinzufügen</button>
 
   <div>
     <label for="filterDate">Filter nach Datum:</label>
@@ -140,7 +140,7 @@
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(assets, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "assets.json");
+      dlAnchor.setAttribute("download", "wallet.json");
       dlAnchor.click();
     }
 
@@ -175,4 +175,4 @@
   </script>
 
 </body>
-  </html>
+    </html>
