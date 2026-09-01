@@ -5,7 +5,7 @@ Dieses Projekt steht unter der MIT-Lizenz.
 
 [![Market.html](https://img.shields.io/badge/Money_flow-Market.html-blue)](https://codexboru.github.io/bond/market.html)
 
-[![Wallet.html](https://img.shields.io/badge/Wallet-Wallet.html-blue)](https://codexboru.github.io/bond/market.html)
+[![Wallet.html](https://img.shields.io/badge/Wallet-Wallet.html-blue)](https://codexboru.github.io/bond/Wallet.html)
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
