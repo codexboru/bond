@@ -2,10 +2,10 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Wallet</title>
+  <title>Assets</title>
   <style>
     body { font-family: Arial, sans-serif; }
-    #popup {
+    #popup, #popupAmount {
       display: none;
       position: fixed;
       top: 30%;
@@ -24,19 +24,39 @@
       background: rgba(0,0,0,0.4);
     }
     button { margin: 5px; }
+    .entry { margin: 5px 0; }
+    .deleteBtn { margin-left: 10px; color: red; }
+    .topbar { margin-bottom: 15px; }
+    #total { font-weight: bold; margin-top: 15px; }
   </style>
 </head>
 <body>
 
-  <h2>Wallet</h2>
-  <button onclick="openPopup()">Auswählen</button>
+  <div class="topbar">
+    <h2 style="display:inline;">Assets</h2>
+    <button onclick="downloadJSON()">Download JSON</button>
+    <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
+    <input type="file" id="uploadFile" accept=".json,application/json" onchange="uploadJSON()" style="display:none;" />
+  </div>
 
-  <p>Investment: <span id="result">–</span></p>
+  <button onclick="openPopup()">Asset auswählen</button>
 
-  <!-- Overlay + Popup -->
+  <div>
+    <label for="filterDate">Filter nach Datum:</label>
+    <input type="date" id="filterDate">
+    <button onclick="filterByDate()">Filtern</button>
+    <button onclick="clearFilter()">Alle anzeigen</button>
+  </div>
+
+  <div id="entries"></div>
+  <p id="total">Gesamtsumme: –</p>
+
+  <!-- Overlay -->
   <div id="overlay"></div>
+
+  <!-- Auswahl-Popup -->
   <div id="popup">
-    <h3>Wallet:</h3>
+    <h3>Assets:</h3>
     <button onclick="selectOption('ASTER Krypto')">ASTER Token</button>
     <button onclick="selectOption('Bond')">Türkische Staatsanleihe Bond</button>
     <button onclick="selectOption('Zinseszins')">Tagesgeld Festgeld 21 Tage</button>
@@ -44,7 +64,19 @@
     <button onclick="closePopup()">Schließen</button>
   </div>
 
+  <!-- Betrag-Popup -->
+  <div id="popupAmount">
+    <h3>Betrag eingeben:</h3>
+    <input type="number" id="amountInput" placeholder="Betrag in TRY">
+    <br><br>
+    <button onclick="saveAmount()">Speichern</button>
+    <button onclick="closePopupAmount()">Schließen</button>
+  </div>
+
   <script>
+    let currentSelection = null;
+    let assets = [];
+
     function openPopup() {
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('popup').style.display = 'block';
@@ -54,10 +86,92 @@
       document.getElementById('popup').style.display = 'none';
     }
     function selectOption(value) {
-      document.getElementById('result').textContent = value;
+      currentSelection = value;
       closePopup();
+      openPopupAmount();
+    }
+
+    function openPopupAmount() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popupAmount').style.display = 'block';
+    }
+    function closePopupAmount() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popupAmount').style.display = 'none';
+    }
+    function saveAmount() {
+      const amount = document.getElementById('amountInput').value;
+      if(amount && currentSelection) {
+        const today = new Date().toLocaleDateString('de-DE');
+        const entry = { type: currentSelection, amount: parseFloat(amount), date: today };
+        assets.push(entry);
+        renderEntries();
+      }
+      document.getElementById('amountInput').value = "";
+      closePopupAmount();
+    }
+
+    function renderEntries(list = assets) {
+      const container = document.getElementById('entries');
+      container.innerHTML = "";
+      let totalSum = 0;
+      list.forEach((inv, index) => {
+        totalSum += inv.amount;
+        const p = document.createElement('p');
+        p.className = "entry";
+        p.textContent = inv.type + ": " + inv.amount + " TRY (Datum: " + inv.date + ")";
+        const delBtn = document.createElement('button');
+        delBtn.textContent = "X";
+        delBtn.className = "deleteBtn";
+        delBtn.onclick = () => { deleteEntry(index); };
+        p.appendChild(delBtn);
+        container.appendChild(p);
+      });
+      document.getElementById('total').textContent = "Gesamtsumme: " + totalSum + " TRY";
+    }
+
+    function deleteEntry(index) {
+      assets.splice(index, 1);
+      renderEntries();
+    }
+
+    function downloadJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(assets, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "assets.json");
+      dlAnchor.click();
+    }
+
+    function uploadJSON() {
+      const file = document.getElementById('uploadFile').files[0];
+      if(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            assets = JSON.parse(e.target.result);
+            renderEntries();
+          } catch(err) {
+            alert("Ungültige JSON-Datei");
+          }
+        };
+        reader.readAsText(file);
+      }
+    }
+
+    function filterByDate() {
+      const filterDate = document.getElementById('filterDate').value;
+      if(filterDate) {
+        const formatted = new Date(filterDate).toLocaleDateString('de-DE');
+        const filtered = assets.filter(inv => inv.date === formatted);
+        renderEntries(filtered);
+      }
+    }
+
+    function clearFilter() {
+      renderEntries();
     }
   </script>
 
 </body>
-</html>
+  </html>
