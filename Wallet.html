@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Popup Auswahl</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #f0f0f0;
+      padding: 20px;
+      border: 2px solid #333;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+    }
+    button { margin: 5px; }
+  </style>
+</head>
+<body>
+
+  <h2>Wallet</h2>
+  <button onclick="openPopup()">Auswählen</button>
+
+  <p>Deine Auswahl: <span id="result">–</span></p>
+
+  <!-- Overlay + Popup -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <h3>Top Coins:</h3>
+    <button onclick="selectOption('Option A')">ASTER</button>
+    <button onclick="selectOption('Option B')">SOL</button>
+    <button onclick="selectOption('Option C')">BNB</button>
+    <br><br>
+    <button onclick="closePopup()">Schließen</button>
+  </div>
+
+  <script>
+    function openPopup() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popup').style.display = 'block';
+    }
+    function closePopup() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+    }
+    function selectOption(value) {
+      document.getElementById('result').textContent = value;
+      closePopup();
+    }
+  </script>
+
+</body>
+</html>
