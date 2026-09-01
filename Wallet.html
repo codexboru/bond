@@ -76,7 +76,7 @@
 
   <script>
     let currentSelection = null;
-    let assets = [];
+    let assets = []; // zentrale Datenstruktur
 
     function openPopup() {
       document.getElementById('overlay').style.display = 'block';
@@ -137,27 +137,28 @@
     }
 
     function downloadJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(assets, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "wallet.json");
-      dlAnchor.click();
+      const blob = new Blob([JSON.stringify(assets, null, 2)], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "wallet.json";
+      a.click();
+      URL.revokeObjectURL(url);
     }
 
     function uploadJSON() {
-      const file = document.getElementById('uploadFile').files[0];
-      if(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          try {
-            assets = JSON.parse(e.target.result);
-            renderEntries();
-          } catch(err) {
-            alert("Ungültige JSON-Datei");
-          }
-        };
-        reader.readAsText(file);
-      }
+      const file = document.getElementById("uploadFile").files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          assets = JSON.parse(e.target.result);
+          renderEntries();
+        } catch (err) {
+          alert("Ungültige JSON-Datei!");
+        }
+      };
+      reader.readAsText(file);
     }
 
     function filterByDate() {
@@ -175,4 +176,4 @@
   </script>
 
 </body>
-</html>
+  </html>
