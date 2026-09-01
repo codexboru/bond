@@ -28,18 +28,18 @@
 </head>
 <body>
 
-  <h2>Wallet</h2>
+  <h2>Coins</h2>
   <button onclick="openPopup()">Auswählen</button>
 
-  <p>Deine Auswahl: <span id="result">–</span></p>
+  <p>Wallet: <span id="result">–</span></p>
 
   <!-- Overlay + Popup -->
   <div id="overlay"></div>
   <div id="popup">
     <h3>Top Coins:</h3>
-    <button onclick="selectOption('Option A')">ASTER</button>
-    <button onclick="selectOption('Option B')">SOL</button>
-    <button onclick="selectOption('Option C')">BNB</button>
+    <button onclick="selectOption('ASTER')">ASTER</button>
+    <button onclick="selectOption('SOLANA')">SOL</button>
+    <button onclick="selectOption('Binance Coin')">BNB</button>
     <br><br>
     <button onclick="closePopup()">Schließen</button>
   </div>
