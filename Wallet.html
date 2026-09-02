@@ -36,10 +36,6 @@
       font-family: "Press Start 2P", monospace;
       cursor: pointer;
     }
-    button:hover {
-      background: #111;
-      color: #ff0;
-    }
     .entry { margin: 5px 0; }
     .deleteBtn { margin-left: 10px; color: red; }
     .topbar { margin-bottom: 15px; }
@@ -48,38 +44,6 @@
       margin-top: 10px;
       color: #ff0;
       font-size: 12px;
-      position: fixed;
-      bottom: 5px;
-      left: 5px;
-      background: #000;
-      padding: 5px;
-      border: 2px solid #0f0;
-    }
-    .badge-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-      margin: 20px 0;
-      background: #000;
-      border: 3px solid #0f0;
-      padding: 15px;
-    }
-    .badge-grid a img {
-      width: 100%;
-      border: 2px solid #0f0;
-      box-shadow: 2px 2px #0f0;
-      background: #111;
-    }
-    .badge-grid a img:hover {
-      filter: brightness(1.3);
-      border-color: #ff0;
-      box-shadow: 2px 2px #ff0;
-    }
-    .banner {
-      text-align: center;
-      font-size: 14px;
-      margin: 20px 0;
-      color: #ff0;
     }
   </style>
   <!-- Google Fonts für 8-Bit Schrift -->
@@ -92,28 +56,6 @@
     <button onclick="downloadJSON()">Download JSON</button>
     <label for="uploadFile" style="cursor:pointer;">Upload JSON</label>
     <input type="file" id="uploadFile" accept="application/*" onchange="uploadJSON()" style="display:none;" />
-  </div>
-
-  <h2>📜 <a href="LICENSE">Lizenz</a></h2>
-  <p>Dieses Projekt steht unter der MIT-Lizenz.</p>
-
-  <!-- Retro Banner -->
-  <div class="banner">📟 CODEX BORU TERMINAL</div>
-
-  <!-- Badge Grid -->
-  <div class="badge-grid">
-    <a href="https://codexboru.github.io/bond/EXE.html"><img src="https://img.shields.io/badge/Terminal-EXE.html-brightgreen" alt="Terminal EXE.html"></a>
-    <a href="https://codexboru.github.io/bond/market.html"><img src="https://img.shields.io/badge/Money_flow-market.html-brightblue" alt="Money_flow market.html"></a>
-    <a href="https://codexboru.github.io/bond/Wallet.html"><img src="https://img.shields.io/badge/Wallet.html-brightgreen" alt="Wallet.html"></a>
-    <a href="https://codexboru.github.io/bond/README.html"><img src="https://img.shields.io/badge/Terminal-README.html-brightgreen" alt="Terminal README.html"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
-    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/badge/version-v2026.07.01-blue.svg" alt="Version"></a>
-    <a href="https://codexboru.github.io/bond/index.html"><img src="https://img.shields.io/badge/View-Demo-blue.svg" alt="Demo"></a>
-    <a href="https://github.com/codexboru"><img src="https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg" alt="Made by Codexboru"></a>
-    <a href="https://github.com/codexboru/bond/releases/latest"><img src="https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange" alt="Latest Downloads"></a>
-    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/github/downloads/codexboru/bond/total?color=purple" alt="Total Downloads"></a>
-    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.08.01"><img src="https://img.shields.io/badge/Archiv-2026.08.01-blue" alt="Archiv 2026.08.01"></a>
-    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.07.01"><img src="https://img.shields.io/badge/Archiv-2026.07.01-green" alt="Archiv 2026.07.01"></a>
   </div>
 
   <button onclick="openPopup()">+ Asset hinzufügen</button>
@@ -168,6 +110,7 @@
       closePopup();
       openPopupAmount();
     }
+
     function openPopupAmount() {
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('popupAmount').style.display = 'block';
@@ -177,12 +120,6 @@
       document.getElementById('popupAmount').style.display = 'none';
     }
     function saveAmount() {
-      const amount = document.getElementById('amountInput').value;
-      if(amount && currentSelection) {
-        const today = new Date().toLocaleDateString('de-DE');
-        const entry = {
-
-  function saveAmount() {
       const amount = document.getElementById('amountInput').value;
       if(amount && currentSelection) {
         const today = new Date().toLocaleDateString('de-DE');
@@ -264,4 +201,4 @@
   </script>
 
 </body>
-</html>
+      </html>
