@@ -5,7 +5,7 @@
   <title>Wallet Assets</title>
   <style>
     body {
-      font-family: "Press Start 2P", monospace;
+      font-family: "Press Start 2P", monospace; /* 8-Bit Font */
       background-color: #111;
       color: #0f0;
       text-shadow: 2px 2px #000;
@@ -36,7 +36,10 @@
       font-family: "Press Start 2P", monospace;
       cursor: pointer;
     }
-    button:hover { background: #111; color: #ff0; }
+    button:hover {
+      background: #111;
+      color: #ff0;
+    }
     .entry { margin: 5px 0; }
     .deleteBtn { margin-left: 10px; color: red; }
     .topbar { margin-bottom: 15px; }
@@ -79,6 +82,7 @@
       color: #ff0;
     }
   </style>
+  <!-- Google Fonts für 8-Bit Schrift -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -93,22 +97,23 @@
   <h2>📜 <a href="LICENSE">Lizenz</a></h2>
   <p>Dieses Projekt steht unter der MIT-Lizenz.</p>
 
+  <!-- Retro Banner -->
   <div class="banner">📟 CODEX BORU TERMINAL</div>
 
+  <!-- Badge Grid -->
   <div class="badge-grid">
-    <!-- deine Badges hier -->
-    <a href="https://codexboru.github.io/bond/EXE.html"><img src="https://img.shields.io/badge/Terminal-EXE.html-brightgreen"></a>
-    <a href="https://codexboru.github.io/bond/market.html"><img src="https://img.shields.io/badge/Money_flow-market.html-brightblue"></a>
-    <a href="https://codexboru.github.io/bond/Wallet.html"><img src="https://img.shields.io/badge/Wallet.html-brightgreen"></a>
-    <a href="https://codexboru.github.io/bond/README.html"><img src="https://img.shields.io/badge/Terminal-README.html-brightgreen"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg"></a>
-    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/badge/version-v2026.07.01-blue.svg"></a>
-    <a href="https://codexboru.github.io/bond/index.html"><img src="https://img.shields.io/badge/View-Demo-blue.svg"></a>
-    <a href="https://github.com/codexboru"><img src="https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg"></a>
-    <a href="https://github.com/codexboru/bond/releases/latest"><img src="https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange"></a>
-    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/github/downloads/codexboru/bond/total?color=purple"></a>
-    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.08.01"><img src="https://img.shields.io/badge/Archiv-2026.08.01-blue"></a>
-    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.07.01"><img src="https://img.shields.io/badge/Archiv-2026.07.01-green"></a>
+    <a href="https://codexboru.github.io/bond/EXE.html"><img src="https://img.shields.io/badge/Terminal-EXE.html-brightgreen" alt="Terminal EXE.html"></a>
+    <a href="https://codexboru.github.io/bond/market.html"><img src="https://img.shields.io/badge/Money_flow-market.html-brightblue" alt="Money_flow market.html"></a>
+    <a href="https://codexboru.github.io/bond/Wallet.html"><img src="https://img.shields.io/badge/Wallet.html-brightgreen" alt="Wallet.html"></a>
+    <a href="https://codexboru.github.io/bond/README.html"><img src="https://img.shields.io/badge/Terminal-README.html-brightgreen" alt="Terminal README.html"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/badge/version-v2026.07.01-blue.svg" alt="Version"></a>
+    <a href="https://codexboru.github.io/bond/index.html"><img src="https://img.shields.io/badge/View-Demo-blue.svg" alt="Demo"></a>
+    <a href="https://github.com/codexboru"><img src="https://img.shields.io/badge/Made%20with-❤️%20by%20Codexboru-red.svg" alt="Made by Codexboru"></a>
+    <a href="https://github.com/codexboru/bond/releases/latest"><img src="https://img.shields.io/github/downloads/codexboru/bond/latest/total?color=orange" alt="Latest Downloads"></a>
+    <a href="https://github.com/codexboru/bond/releases"><img src="https://img.shields.io/github/downloads/codexboru/bond/total?color=purple" alt="Total Downloads"></a>
+    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.08.01"><img src="https://img.shields.io/badge/Archiv-2026.08.01-blue" alt="Archiv 2026.08.01"></a>
+    <a href="https://github.com/codexboru/bond/tree/main/data/archive/v2026.07.01"><img src="https://img.shields.io/badge/Archiv-2026.07.01-green" alt="Archiv 2026.07.01"></a>
   </div>
 
   <button onclick="openPopup()">+ Asset hinzufügen</button>
@@ -124,8 +129,10 @@
   <p id="total">Gesamtsumme: –</p>
   <p id="status"></p>
 
+  <!-- Overlay -->
   <div id="overlay"></div>
 
+  <!-- Auswahl-Popup -->
   <div id="popup">
     <h3>Assets:</h3>
     <button onclick="selectOption('ASTER Krypto')">ASTER Token</button>
@@ -135,6 +142,7 @@
     <button onclick="closePopup()">Schließen</button>
   </div>
 
+  <!-- Betrag-Popup -->
   <div id="popupAmount">
     <h3>Betrag eingeben:</h3>
     <input type="number" id="amountInput" placeholder="Betrag in TRY">
@@ -147,91 +155,111 @@
     let currentSelection = null;
     let assets = [];
 
-    function openPopup(){document.getElementById('overlay').style.display='block';document.getElementById('popup').style.display='block';}
-    function closePopup(){document.getElementById('overlay').style.display='none';document.getElementById('popup').style.display='none';}
-    function selectOption(value){currentSelection=value;closePopup();openPopupAmount();}
-    function openPopupAmount(){document.getElementById('overlay').style.display='block';document.getElementById('popupAmount').style.display='block';}
-    function closePopupAmount(){document.getElementById('overlay').style.display='none';document.getElementById('popupAmount').style.display='none';}
+    function openPopup() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popup').style.display = 'block';
+    }
+    function closePopup() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+    }
+    function selectOption(value) {
+      currentSelection = value;
+      closePopup();
+      openPopupAmount();
+    }
+    function openPopupAmount() {
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popupAmount').style.display = 'block';
+    }
+    function closePopupAmount() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popupAmount').style.display = 'none';
+    }
+    function saveAmount() {
+      const amount = document.getElementById('amountInput').value;
+      if(amount && currentSelection) {
+        const today = new Date().toLocaleDateString('de-DE');
+        const entry = {
 
-    function saveAmount(){
-      const amount=document.getElementById('amountInput').value;
-      if(amount&&currentSelection){
-        const today=new Date().toLocaleDateString('de-DE');
-        const entry={type:currentSelection,amount:parseFloat(amount),date:today};
+  function saveAmount() {
+      const amount = document.getElementById('amountInput').value;
+      if(amount && currentSelection) {
+        const today = new Date().toLocaleDateString('de-DE');
+        const entry = { type: currentSelection, amount: parseFloat(amount), date: today };
         assets.push(entry);
         renderEntries();
-        document.getElementById('status').textContent=">> 1 Asset gespeichert!";
+        document.getElementById('status').textContent = ">> 1 Asset gespeichert!";
       }
-      document.getElementById('amountInput').value="";
+      document.getElementById('amountInput').value = "";
       closePopupAmount();
     }
 
-    function renderEntries(list=assets){
-      const container=document.getElementById('entries');
-      container.innerHTML="";
-      let totalSum=0;
-      list.forEach((inv,index)=>{
-        totalSum+=inv.amount;
-        const p=document.createElement('p');
-        p.className="entry";
-        p.textContent=inv.type+": "+inv.amount+" TRY (Datum:
-          inv.date+")";
-        const delBtn=document.createElement('button');
-        delBtn.textContent="X";
-        delBtn.className="deleteBtn";
-        delBtn.onclick=()=>{deleteEntry(index);};
+    function renderEntries(list = assets) {
+      const container = document.getElementById('entries');
+      container.innerHTML = "";
+      let totalSum = 0;
+      list.forEach((inv, index) => {
+        totalSum += inv.amount;
+        const p = document.createElement('p');
+        p.className = "entry";
+        p.textContent = inv.type + ": " + inv.amount + " TRY (Datum: " + inv.date + ")";
+        const delBtn = document.createElement('button');
+        delBtn.textContent = "X";
+        delBtn.className = "deleteBtn";
+        delBtn.onclick = () => { deleteEntry(index); };
         p.appendChild(delBtn);
         container.appendChild(p);
       });
-      document.getElementById('total').textContent="Gesamtsumme: "+totalSum+" TRY";
+      document.getElementById('total').textContent = "Gesamtsumme: " + totalSum + " TRY";
     }
 
-    function deleteEntry(index){
-      assets.splice(index,1);
+    function deleteEntry(index) {
+      assets.splice(index, 1);
       renderEntries();
-      document.getElementById('status').textContent=">> Asset gelöscht!";
+      document.getElementById('status').textContent = ">> Asset gelöscht!";
     }
 
-    function downloadJSON(){
-      const blob=new Blob([JSON.stringify(assets,null,2)],{type:"application/json"});
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement("a");
-      a.href=url;
-      a.download="wallet.json";
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(assets, null, 2)], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "wallet.json";
       a.click();
       URL.revokeObjectURL(url);
-      document.getElementById('status').textContent=">> Datei wallet.json gespeichert!";
+      document.getElementById('status').textContent = ">> Datei wallet.json gespeichert!";
     }
 
-    function uploadJSON(){
-      const file=document.getElementById("uploadFile").files[0];
-      if(!file)return;
-      const reader=new FileReader();
-      reader.onload=e=>{
-        try{
-          assets=JSON.parse(e.target.result);
+    function uploadJSON() {
+      const file = document.getElementById("uploadFile").files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          assets = JSON.parse(e.target.result);
           renderEntries();
-          document.getElementById('status').textContent=">> "+assets.length+" Assets erfolgreich geladen!";
-        }catch(err){
+          document.getElementById('status').textContent = ">> " + assets.length + " Assets erfolgreich geladen!";
+        } catch (err) {
           alert("Ungültige JSON-Datei!");
         }
       };
       reader.readAsText(file);
     }
 
-    function filterByDate(){
-      const filterDate=document.getElementById('filterDate').value;
-      if(filterDate){
-        const formatted=new Date(filterDate).toLocaleDateString('de-DE');
-        const filtered=assets.filter(inv=>inv.date===formatted);
+    function filterByDate() {
+      const filterDate = document.getElementById('filterDate').value;
+      if(filterDate) {
+        const formatted = new Date(filterDate).toLocaleDateString('de-DE');
+        const filtered = assets.filter(inv => inv.date === formatted);
         renderEntries(filtered);
-        document.getElementById('status').textContent=">> Filter angewendet!";
+        document.getElementById('status').textContent = ">> Filter angewendet!";
       }
     }
 
-    function clearFilter(){
+    function clearFilter() {
       renderEntries();
-      document.getElementById('status').textContent=">> Filter zurückgesetzt!";
+      document.getElementById('status').textContent = ">> Filter zurückgesetzt!";
     }
   </script>
 
