@@ -3,7 +3,7 @@ Dieses Projekt steht unter der MIT-Lizenz.
 
 [![Terminal_EXE](https://img.shields.io/badge/Terminal-EXE-darkblue)](https://codexboru.github.io/bond/EXE.html)
 
-[![Crypto.html](https://img.shields.io/badge/Crypto-Tracker-Market.html-green)](https://codexboru.github.io/bond/Crypto.html)
+[![Crypto.html](https://img.shields.io/badge/Crypto.html-green)](https://codexboru.github.io/bond/Crypto.html)
 
 
 [![Market.html](https://img.shields.io/badge/Money_flow-Market.html-blue)](https://codexboru.github.io/bond/market.html)
