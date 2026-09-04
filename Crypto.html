@@ -20,14 +20,14 @@
 </head>
 <body>
 
-<h2>Türkei 1-jährige Staatsanleihe</h2>
+<h2>Crypto-Tracker</h2>
 
 <!-- Eingabeformular -->
-<label>Summe (TL): <input type="number" id="sumTL" step="0.01"></label>
+<label>Investition (TL): <input type="number" id="sumTL" step="0.01"></label>
 <label>Datum: <input type="date" id="date"></label>
-<label>Kauf (TL): <input type="number" id="buyValue" step="0.01"></label>
+<label>Kaufkurs (TL): <input type="number" id="buyValue" step="0.01"></label>
 <label>Ticker: <input type="text" id="ticker"></label>
-<label>Verkauf (TL): <input type="number" id="sellValue" step="0.01"></label>
+<label>Verkaufskurs (TL): <input type="number" id="sellValue" step="0.01"></label>
 <button onclick="addEntry()">Eintrag hinzufügen</button>
 
 <!-- Tabelle -->
@@ -35,10 +35,11 @@
   <thead>
     <tr>
       <th>Datum</th>
-      <th>Summe (TL)</th>
-      <th class="buy">Kauf (TL)</th>
+      <th>Investition (TL)</th>
+      <th class="buy">Kaufkurs (TL)</th>
       <th>Ticker</th>
-      <th class="sell">Verkauf (TL)</th>
+      <th class="sell">Verkaufskurs (TL)</th>
+      <th>Gesamtwert (TL)</th>
       <th>Profit (TL)</th>
       <th>Aktion</th>
     </tr>
@@ -71,11 +72,16 @@ function addEntry() {
   const sellValue = parseFloat(document.getElementById('sellValue').value) || 0;
   const ticker = document.getElementById('ticker').value;
 
-  let invested = buyValue;
+  // Stückzahl berechnen
+  const quantity = sumTL / buyValue;
+
+  // Gesamtwert beim Verkauf
+  let totalSell = 0;
   let profit = 0;
 
   if (sellValue > 0) {
-    profit = sellValue - buyValue;
+    totalSell = quantity * sellValue;
+    profit = totalSell - sumTL;
   }
 
   const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
@@ -87,11 +93,12 @@ function addEntry() {
     <td>${buyValue.toFixed(2)}</td>
     <td>${ticker}</td>
     <td>${sellValue ? sellValue.toFixed(2) : '-'}</td>
+    <td>${totalSell ? totalSell.toFixed(2) : '-'}</td>
     <td>${profit.toFixed(2)}</td>
     <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
   `;
 
-  row.dataset.invested = invested;
+  row.dataset.invested = sumTL;
   row.dataset.profit = profit;
 
   updateTotals();
@@ -132,7 +139,8 @@ function downloadData() {
       buyValue: row.cells[2].innerText,
       ticker: row.cells[3].innerText,
       sellValue: row.cells[4].innerText,
-      profit: row.cells[5].innerText
+      totalSell: row.cells[5].innerText,
+      profit: row.cells[6].innerText
     });
   }
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -160,10 +168,11 @@ function uploadData() {
         <td>${entry.buyValue}</td>
         <td>${entry.ticker}</td>
         <td>${entry.sellValue}</td>
+        <td>${entry.totalSell}</td>
         <td>${entry.profit}</td>
         <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
       `;
-      row.dataset.invested = parseFloat(entry.buyValue) || 0;
+      row.dataset.invested = parseFloat(entry.sumTL) || 0;
       row.dataset.profit = parseFloat(entry.profit) || 0;
     });
     updateTotals();
@@ -173,4 +182,4 @@ function uploadData() {
 </script>
 
 </body>
-</html>
+  </html>
