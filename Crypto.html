@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Crypto-Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Press Start 2P', monospace; margin: 20px; background-color: #111; color: #0f0; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #0f0; padding: 8px; text-align: center; }
+    th { background-color: #222; }
+    .buy { background-color: #033; }
+    .sell { background-color: #300; }
+    .delete-btn { background-color: #ff6666; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    .dark-mode { background-color: black; color: white; }
+    .dark-mode th { background-color: #333; }
+    button { background-color: #222; color: #0f0; border: 3px solid #0f0; padding: 10px 20px; cursor: pointer; box-shadow: 4px 4px #0f0; }
+    button:hover { background-color: #0f0; color: #111; }
+  </style>
+</head>
+<body>
+
+<h2>Türkei 1-jährige Staatsanleihe</h2>
+
+<!-- Eingabeformular -->
+<label>Summe (TL): <input type="number" id="sumTL" step="0.01"></label>
+<label>Datum: <input type="date" id="date"></label>
+<label>Kauf (TL): <input type="number" id="buyValue" step="0.01"></label>
+<label>Ticker: <input type="text" id="ticker"></label>
+<label>Verkauf (TL): <input type="number" id="sellValue" step="0.01"></label>
+<button onclick="addEntry()">Eintrag hinzufügen</button>
+
+<!-- Tabelle -->
+<table id="bondTable">
+  <thead>
+    <tr>
+      <th>Datum</th>
+      <th>Summe (TL)</th>
+      <th class="buy">Kauf (TL)</th>
+      <th>Ticker</th>
+      <th class="sell">Verkauf (TL)</th>
+      <th>Profit (TL)</th>
+      <th>Aktion</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<!-- Totals -->
+<h3>Gesamt investiert: <span id="totalInvested">0</span> TL</h3>
+<h3>Gesamt Profit: <span id="totalProfit">0</span> TL</h3>
+<h3>Total (Investiert + Profit): <span id="grandTotal">0</span> TL</h3>
+
+<!-- Buttons -->
+<button onclick="toggleMode()">☀️ / 🌛</button>
+<a href="https://www.github.com/codexboru" target="_blank"><button>😶‍🌫️ Codexboru</button></a>
+<a href="https://codexboru.github.io/bond/README.html" target="_blank"><button>🕹 README.md</button></a>
+<a href="https://codexboru.github.io/bond/money.html" target="_blank"><button>🐈 M2/M3</button></a>
+<a href="https://codexboru.github.io/bond/stats.html" target="_blank"><button>📊 Stats</button></a>
+<a href="https://codexboru.github.io/bond/Wallet.html" target="_blank"><button>🎫 Wallet</button></a>
+
+<button onclick="downloadData()">💾 download</button>
+<input type="file" id="uploadFile" accept=".json,.txt,.csv" onchange="uploadData()" style="display:none;" />
+<button onclick="document.getElementById('uploadFile').click()">💉 upload</button>
+
+<script>
+function addEntry() {
+  const sumTL = parseFloat(document.getElementById('sumTL').value) || 0;
+  const date = document.getElementById('date').value;
+  const buyValue = parseFloat(document.getElementById('buyValue').value) || 0;
+  const sellValue = parseFloat(document.getElementById('sellValue').value) || 0;
+  const ticker = document.getElementById('ticker').value;
+
+  let invested = buyValue;
+  let profit = 0;
+
+  if (sellValue > 0) {
+    profit = sellValue - buyValue;
+  }
+
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  const row = table.insertRow();
+
+  row.innerHTML = `
+    <td>${date}</td>
+    <td>${sumTL.toFixed(2)}</td>
+    <td>${buyValue.toFixed(2)}</td>
+    <td>${ticker}</td>
+    <td>${sellValue ? sellValue.toFixed(2) : '-'}</td>
+    <td>${profit.toFixed(2)}</td>
+    <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+  `;
+
+  row.dataset.invested = invested;
+  row.dataset.profit = profit;
+
+  updateTotals();
+}
+
+function deleteRow(btn) {
+  const row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+  updateTotals();
+}
+
+function updateTotals() {
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  let totalInvested = 0;
+  let totalProfit = 0;
+
+  for (let row of table.rows) {
+    totalInvested += parseFloat(row.dataset.invested) || 0;
+    totalProfit += parseFloat(row.dataset.profit) || 0;
+  }
+
+  document.getElementById('totalInvested').innerText = totalInvested.toFixed(2);
+  document.getElementById('totalProfit').innerText = totalProfit.toFixed(2);
+  document.getElementById('grandTotal').innerText = (totalInvested + totalProfit).toFixed(2);
+}
+
+function toggleMode() {
+  document.body.classList.toggle("dark-mode");
+}
+
+function downloadData() {
+  const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+  const data = [];
+  for (let row of table.rows) {
+    data.push({
+      date: row.cells[0].innerText,
+      sumTL: row.cells[1].innerText,
+      buyValue: row.cells[2].innerText,
+      ticker: row.cells[3].innerText,
+      sellValue: row.cells[4].innerText,
+      profit: row.cells[5].innerText
+    });
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "bonddata.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function uploadData() {
+  const file = document.getElementById('uploadFile').files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = JSON.parse(e.target.result);
+    const table = document.getElementById('bondTable').getElementsByTagName('tbody')[0];
+    table.innerHTML = "";
+    data.forEach(entry => {
+      const row = table.insertRow();
+      row.innerHTML = `
+        <td>${entry.date}</td>
+        <td>${entry.sumTL}</td>
+        <td>${entry.buyValue}</td>
+        <td>${entry.ticker}</td>
+        <td>${entry.sellValue}</td>
+        <td>${entry.profit}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Löschen</button></td>
+      `;
+      row.dataset.invested = parseFloat(entry.buyValue) || 0;
+      row.dataset.profit = parseFloat(entry.profit) || 0;
+    });
+    updateTotals();
+  };
+  reader.readAsText(file);
+}
+</script>
+
+</body>
+</html>
