@@ -10,6 +10,9 @@ Dieses Projekt steht unter der MIT-Lizenz.
 
 [![Wallet.html](https://img.shields.io/badge/Wallet-Wallet.html-blue)](https://codexboru.github.io/bond/Wallet.html)
 
+[![Chart Erklärung](https://img.shields.io/badge/Kerzen-Chart.html-blue)](https://codexboru.github.io/bond/Chart.html)
+
+
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-v2026.07.01-blue.svg)](https://github.com/codexboru/bond/releases)
