@@ -237,3 +237,20 @@ Diese Sprache ist Teil der *Forward Guidance* – ein kalkuliertes Signal für P
 Zeitspanne bis zum Zinsschock
 
 ### 📢 Signal: 6-12 Monate bis zum Zinsschock und erhöhung massiv der Zinsen
+
+---
+## 📊 Chart.html – Marktbewegungen erklärt
+
+Die Datei **Chart.html** dokumentiert typische Muster im Candlestick‑Chart:
+
+- **Long Liquidation**  
+  ![Long Liquidation](bilder/Long_Liquidation.PNG)  
+  So sieht eine *long liquidation* im Chart aus: eine rote Kerze mit langem unteren Docht.  
+  → Viele Long‑Positionen wurden zwangsweise geschlossen, der Kurs fiel abrupt bis zur Marke *0.7486*.  
+  → Typisches Muster einer **Liquidation Docht**.
+
+- **Einstieg hoch gehebelter Longs**  
+  ![Long Entry](bilder/Long_entry.PNG)  
+  Hier sieht man im grünen Docht, dass eine hoch gehebelte Long‑Position eingestiegen ist.  
+  → Der Kurs wurde kurz nach unten gedrückt, Käufer absorbierten den Druck.  
+  → Ergebnis: eine grüne Kerze mit **Liquidation Wick**, Zeichen für neue Energie im Markt.
